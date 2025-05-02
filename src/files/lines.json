@@ -1,0 +1,305 @@
+{
+  "type": "PullRequest",
+  "pulls": [
+    {
+      "order": 1,
+      "from": "USA",
+      "to": "GBR",
+      "starLat": "40.7128",
+      "starLng": "-74.0060",
+      "endLat": "51.5074",
+      "endLng": "-0.1278",
+      "arcAlt": 0.3
+    },
+    {
+      "order": 2,
+      "from": "FRA",
+      "to": "DEU",
+      "starLat": "48.8566",
+      "starLng": "2.3522",
+      "endLat": "52.5200",
+      "endLng": "13.4050",
+      "arcAlt": 0.25
+    },
+    {
+      "order": 3,
+      "from": "CHN",
+      "to": "RUS",
+      "starLat": "39.9042",
+      "starLng": "116.4074",
+      "endLat": "55.7558",
+      "endLng": "37.6173",
+      "arcAlt": 0.35
+    },
+    {
+      "order": 4,
+      "from": "BRA",
+      "to": "ARG",
+      "starLat": "-22.9068",
+      "starLng": "-43.1729",
+      "endLat": "-34.6037",
+      "endLng": "-58.3816",
+      "arcAlt": 0.3
+    },
+    {
+      "order": 5,
+      "from": "AUS",
+      "to": "NZL",
+      "starLat": "-33.8688",
+      "starLng": "151.2093",
+      "endLat": "-36.8485",
+      "endLng": "174.7633",
+      "arcAlt": 0.3
+    },
+    {
+      "order": 6,
+      "from": "IND",
+      "to": "ARE",
+      "starLat": "28.6139",
+      "starLng": "77.2090",
+      "endLat": "25.2048",
+      "endLng": "55.2708",
+      "arcAlt": 0.25
+    },
+    {
+      "order": 7,
+      "from": "KEN",
+      "to": "ZAF",
+      "starLat": "-1.2864",
+      "starLng": "36.8172",
+      "endLat": "-33.9249",
+      "endLng": "18.4241",
+      "arcAlt": 0.3
+    },
+    {
+      "order": 8,
+      "from": "SGP",
+      "to": "IDN",
+      "starLat": "1.3521",
+      "starLng": "103.8198",
+      "endLat": "-6.2088",
+      "endLng": "106.8456",
+      "arcAlt": 0.2
+    },
+    {
+      "order": 9,
+      "from": "TUR",
+      "to": "EGY",
+      "starLat": "41.0082",
+      "starLng": "28.9784",
+      "endLat": "30.0444",
+      "endLng": "31.2357",
+      "arcAlt": 0.25
+    },
+    {
+      "order": 10,
+      "from": "MEX",
+      "to": "CAN",
+      "starLat": "19.4326",
+      "starLng": "-99.1332",
+      "endLat": "45.4215",
+      "endLng": "-75.6972",
+      "arcAlt": 0.3
+    },
+    {
+      "order": 11,
+      "from": "USA",
+      "to": "JPN",
+      "starLat": "40.7128",
+      "starLng": "-74.0060",
+      "endLat": "35.6762",
+      "endLng": "139.6503",
+      "arcAlt": 0.4
+    },
+    {
+      "order": 12,
+      "from": "DEU",
+      "to": "ITA",
+      "starLat": "52.5200",
+      "starLng": "13.4050",
+      "endLat": "41.9028",
+      "endLng": "12.4964",
+      "arcAlt": 0.2
+    },
+    {
+      "order": 13,
+      "from": "KOR",
+      "to": "CHN",
+      "starLat": "37.5665",
+      "starLng": "126.9780",
+      "endLat": "39.9042",
+      "endLng": "116.4074",
+      "arcAlt": 0.3
+    },
+    {
+      "order": 14,
+      "from": "ESP",
+      "to": "NOR",
+      "starLat": "40.4168",
+      "starLng": "-3.7038",
+      "endLat": "59.9139",
+      "endLng": "10.7522",
+      "arcAlt": 0.3
+    },
+    {
+      "order": 15,
+      "from": "FRA",
+      "to": "USA",
+      "starLat": "48.8566",
+      "starLng": "2.3522",
+      "endLat": "40.7128",
+      "endLng": "-74.0060",
+      "arcAlt": 0.3
+    },
+    {
+      "order": 16,
+      "from": "AUS",
+      "to": "IDN",
+      "starLat": "-33.8688",
+      "starLng": "151.2093",
+      "endLat": "-6.2088",
+      "endLng": "106.8456",
+      "arcAlt": 0.35
+    },
+    {
+      "order": 17,
+      "from": "IND",
+      "to": "SGP",
+      "starLat": "28.6139",
+      "starLng": "77.2090",
+      "endLat": "1.3521",
+      "endLng": "103.8198",
+      "arcAlt": 0.3
+    },
+    {
+      "order": 18,
+      "from": "TUR",
+      "to": "GBR",
+      "starLat": "41.0082",
+      "starLng": "28.9784",
+      "endLat": "51.5074",
+      "endLng": "-0.1278",
+      "arcAlt": 0.3
+    },
+    {
+      "order": 19,
+      "from": "ITA",
+      "to": "ESP",
+      "starLat": "41.9028",
+      "starLng": "12.4964",
+      "endLat": "40.4168",
+      "endLng": "-3.7038",
+      "arcAlt": 0.2
+    },
+    {
+      "order": 20,
+      "from": "NZL",
+      "to": "JPN",
+      "starLat": "-36.8485",
+      "starLng": "174.7633",
+      "endLat": "35.6762",
+      "endLng": "139.6503",
+      "arcAlt": 0.35
+    },
+    {
+      "order": 21,
+      "from": "CHN",
+      "to": "ARE",
+      "starLat": "39.9042",
+      "starLng": "116.4074",
+      "endLat": "25.2048",
+      "endLng": "55.2708",
+      "arcAlt": 0.25
+    },
+    {
+      "order": 22,
+      "from": "GBR",
+      "to": "NOR",
+      "starLat": "51.5074",
+      "starLng": "-0.1278",
+      "endLat": "59.9139",
+      "endLng": "10.7522",
+      "arcAlt": 0.3
+    },
+    {
+      "order": 23,
+      "from": "CAN",
+      "to": "KOR",
+      "starLat": "45.4215",
+      "starLng": "-75.6972",
+      "endLat": "37.5665",
+      "endLng": "126.9780",
+      "arcAlt": 0.35
+    },
+    {
+      "order": 24,
+      "from": "ZAF",
+      "to": "EGY",
+      "starLat": "-33.9249",
+      "starLng": "18.4241",
+      "endLat": "30.0444",
+      "endLng": "31.2357",
+      "arcAlt": 0.3
+    },
+    {
+      "order": 25,
+      "from": "RUS",
+      "to": "MEX",
+      "starLat": "55.7558",
+      "starLng": "37.6173",
+      "endLat": "19.4326",
+      "endLng": "-99.1332",
+      "arcAlt": 0.4
+    },
+    {
+      "order": 26,
+      "from": "ARG",
+      "to": "KEN",
+      "starLat": "-34.6037",
+      "starLng": "-58.3816",
+      "endLat": "-1.2864",
+      "endLng": "36.8172",
+      "arcAlt": 0.3
+    },
+    {
+      "order": 27,
+      "from": "IDN",
+      "to": "TUR",
+      "starLat": "-6.2088",
+      "starLng": "106.8456",
+      "endLat": "41.0082",
+      "endLng": "28.9784",
+      "arcAlt": 0.3
+    },
+    {
+      "order": 28,
+      "from": "NOR",
+      "to": "FRA",
+      "starLat": "59.9139",
+      "starLng": "10.7522",
+      "endLat": "48.8566",
+      "endLng": "2.3522",
+      "arcAlt": 0.25
+    },
+    {
+      "order": 29,
+      "from": "ARE",
+      "to": "DEU",
+      "starLat": "25.2048",
+      "starLng": "55.2708",
+      "endLat": "52.5200",
+      "endLng": "13.4050",
+      "arcAlt": 0.3
+    },
+    {
+      "order": 30,
+      "from": "SGP",
+      "to": "NZL",
+      "starLat": "1.3521",
+      "starLng": "103.8198",
+      "endLat": "-36.8485",
+      "endLng": "174.7633",
+      "arcAlt": 0.35
+    }
+  ]
+}
