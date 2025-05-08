@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import { useGlobe } from "@/app/globe-context";
 
-const GlobeComponent: React.FC = () => {
+const Planet: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const globeContext = useGlobe();
 
@@ -14,14 +14,14 @@ const GlobeComponent: React.FC = () => {
         globeContext.initGlobe(container);
 
         return () => {
+            globeContext.cleanup();
             if (globeContext.renderer?.domElement && container.contains(globeContext.renderer.domElement)) {
                 container.removeChild(globeContext.renderer.domElement);
             }
-            globeContext.cleanup();
         };
     }, [globeContext]);
 
     return <div ref={containerRef} className="absolute inset-0" />;
 };
 
-export default GlobeComponent;
+export default Planet;

@@ -10,7 +10,6 @@ const VideoTextBlockFirst = () => {
             "Maritime transportation accounts for a significant portion of global oil shipments, with over 60% of crude oil and refined products transported by sea.",
             "This dominance highlights the critical role of shipping in the energy sector, as it enables countries to access vital resources efficiently and cost-effectively."
         ],
-        buttonText: "Узнать больше",
         videoSrc: "/videos/tanker1.mp4"
     };
 
@@ -37,7 +36,7 @@ const VideoTextBlockFirst = () => {
     };
 
     return (
-        <section className="w-full bg-gray-950 text-white py-20 px-4 sm:px-6">
+        <section className="w-full bg-slate-950 text-white py-20 px-4 sm:px-6">
             <motion.div
                 initial="hidden"
                 whileInView="visible"
@@ -66,11 +65,11 @@ const VideoTextBlockFirst = () => {
 
                     <motion.div
                         variants={containerVariants}
-                        className="w-full lg:flex-1 space-y-6"
+                        className="w-full lg:flex-1 space-y-8"
                     >
                         <motion.h2
                             variants={itemVariants}
-                            className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent"
+                            className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent mb-6 leading-[1.3]"
                         >
                             {content.title}
                         </motion.h2>

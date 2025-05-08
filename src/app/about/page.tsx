@@ -1,21 +1,19 @@
 "use client";
 
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaOilCan, FaWater, FaRobot, FaChartLine } from "react-icons/fa";
-import React, { useState } from "react";
-import UploadModal from "../../components/UploadModal";
+import UploadModal from "@/components/UploadModal";
+import Tooltip from "@/components/Tooltip";
 import { handleUpload } from "../api/uploadService";
 
 const AboutPage = () => {
-    //Анимационные параметры
     const container = {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
-            transition: {
-                staggerChildren: 0.2,
-            },
-        },
+            transition: { staggerChildren: 0.2 }
+        }
     };
 
     const item = {
@@ -23,11 +21,38 @@ const AboutPage = () => {
         visible: {
             y: 0,
             opacity: 1,
-            transition: { duration: 0.5 },
-        },
+            transition: { duration: 0.5 }
+        }
     };
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const features = [
+        {
+            icon: <FaWater className="text-4xl mb-4 text-blue-300" />,
+            title: "Water surface analysis",
+            text: "Scanning of satellite and aerial photographs in various spectral ranges",
+            tooltip: "Our system analyzes images in visible, infrared and ultraviolet spectra to detect even minor surface anomalies. Special algorithms enhance contrast and highlight potential pollution areas."
+        },
+        {
+            icon: <FaRobot className="text-4xl mb-4 text-emerald-300" />,
+            title: "AI processing",
+            text: "The neural network analyzes images with an accuracy of 98.7%",
+            tooltip: "The deep learning model was trained on over 50,000 annotated images of oil spills. It can distinguish between oil slicks, algae blooms, and natural surface phenomena with high precision."
+        },
+        {
+            icon: <FaOilCan className="text-4xl mb-4 text-amber-300" />,
+            title: "Spot detection",
+            text: "Automatic detection and classification of oil pollution",
+            tooltip: "The system classifies spills by type (crude oil, refined products, dispersants) and age (fresh spills show different spectral characteristics than weathered ones)."
+        },
+        {
+            icon: <FaChartLine className="text-4xl mb-4 text-purple-300" />,
+            title: "Visualization",
+            text: "Generating reports with allocation of polluted zones",
+            tooltip: "Interactive maps show spill locations with estimated size and trajectory predictions. Reports include statistics, historical comparisons, and recommended response actions."
+        }
+    ];
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-900 to-blue-950 text-white pt-20">
@@ -41,7 +66,7 @@ const AboutPage = () => {
                 >
                     <motion.h1
                         variants={item}
-                        className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400"
+                        className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400 leading-relaxed"
                     >
                         Oil slick detection technology
                     </motion.h1>
@@ -55,69 +80,54 @@ const AboutPage = () => {
             </section>
 
             {/* Как это работает */}
-            <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
                 <motion.h2
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                     viewport={{ once: true }}
-                    className="text-3xl md:text-4xl font-bold mb-12 text-center"
+                    className="text-4xl md:text-5xl font-bold mb-16 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400 leading-relaxed"
                 >
                     How our system works?
                 </motion.h2>
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {[
-                        {
-                            icon: <FaWater className="text-4xl mb-4 text-blue-300" />,
-                            title: "Water surface analysis",
-                            text: "Scanning of satellite and aerial photographs in various spectral ranges",
-                        },
-                        {
-                            icon: <FaRobot className="text-4xl mb-4 text-emerald-300" />,
-                            title: "AI processing",
-                            text: "The neural network analyzes images with an accuracy of 98.7%",
-                        },
-                        {
-                            icon: <FaOilCan className="text-4xl mb-4 text-amber-300" />,
-                            title: "Spot detection",
-                            text: "Automatic detection and classification of oil pollution",
-                        },
-                        {
-                            icon: <FaChartLine className="text-4xl mb-4 text-purple-300" />,
-                            title: "Visualization",
-                            text: "Generating reports with allocation of polluted zones",
-                        },
-                    ].map((feature, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 50 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
-                            viewport={{ once: true }}
-                            className="bg-gray-800/50 p-6 rounded-xl backdrop-blur-sm border border-gray-700 hover:border-blue-400 transition-all"
-                        >
-                            {feature.icon}
-                            <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
-                            <p className="text-gray-300">{feature.text}</p>
-                        </motion.div>
+                    {features.map((feature, index) => (
+                        <Tooltip key={index} content={feature.tooltip}>
+                            <motion.div
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                                viewport={{ once: true }}
+                                className={`
+                  bg-gray-800/40 p-8 rounded-2xl 
+                  backdrop-blur-sm border-2 border-gray-600 
+                  hover:border-blue-400/50 transition-all
+                  h-full flex flex-col items-center text-center
+                `}
+                            >
+                                <div className="mb-6 text-5xl">{feature.icon}</div>
+                                <h3 className="text-2xl font-bold mb-4 text-white">{feature.title}</h3>
+                                <p className="text-gray-300 text-lg flex-grow">{feature.text}</p>
+                            </motion.div>
+                        </Tooltip>
                     ))}
                 </div>
             </section>
 
             {/* Детали технологии */}
-            <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+            <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
                 <motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     transition={{ duration: 0.8 }}
                     viewport={{ once: true }}
-                    className="bg-gray-800/30 p-8 md:p-10 rounded-2xl border border-gray-700 backdrop-blur-sm"
+                    className="bg-gray-800/30 p-10 rounded-2xl border-2 border-gray-600 backdrop-blur-sm"
                 >
-                    <h2 className="text-2xl md:text-3xl font-bold mb-6 text-blue-300">
+                    <h2 className="text-3xl md:text-4xl font-bold mb-8 text-blue-300">
                         Technology Details
                     </h2>
-                    <div className="space-y-4 text-lg text-gray-200">
+                    <div className="space-y-6 text-xl text-gray-200 leading-relaxed">
                         <p>
                             Our neural network uses a modified U-Net architecture with attention
                             to key areas, allowing accurate segmentation of oil spills even on
@@ -149,10 +159,9 @@ const AboutPage = () => {
                     <h2 className="text-3xl md:text-4xl font-bold mb-6">
                         Are you ready to try our technology?
                     </h2>
-
                     <button
                         onClick={() => setIsModalOpen(true)}
-                        className="mt-8 px-10 py-4 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full text-xl font-bold hover:scale-105 transition-transform shadow-lg"
+                        className="mt-8 px-10 py-4 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full text-xl font-bold hover:scale-105 transition-transform shadow-lg hover:shadow-emerald-500/20"
                     >
                         Upload Archive
                     </button>

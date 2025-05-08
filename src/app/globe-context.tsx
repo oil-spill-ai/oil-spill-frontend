@@ -4,9 +4,9 @@ import React, { createContext, useContext, useRef, useEffect } from "react";
 import * as THREE from "three";
 import ThreeGlobe from "three-globe";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import countries from "../files/custom.geo.json";
-import lines from "../files/lines.json";
-import map from "../files/map.json";
+import countries from "@/geo-files/custom.geo.json";
+import lines from "@/geo-files/lines.json";
+import map from "@/geo-files/map.json";
 
 type GlobeContextType = {
     scene: THREE.Scene | null;
@@ -60,8 +60,54 @@ export function GlobeProvider({ children }: { children: React.ReactNode }) {
     const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
     const controlsRef = useRef<OrbitControls | null>(null);
     const globeRef = useRef<ThreeGlobe | null>(null);
+    const starsRef = useRef<THREE.Points | null>(null);
     const animationFrameId = useRef<number | null>(null);
     const mousePosition = useRef({ x: 0, y: 0 });
+
+    //Функция создания звезд
+    const createStars = (scene: THREE.Scene) => {
+        const count = 2000;
+        const geometry = new THREE.BufferGeometry();
+
+        const positions = new Float32Array(count * 3);
+        const colors = new Float32Array(count * 3);
+        const sizes = new Float32Array(count);
+
+        const color = new THREE.Color();
+
+        for (let i = 0; i < count; i++) {
+            const radius = 1000 + Math.random() * 500;
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos(2 * Math.random() - 1);
+
+            positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+            positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+            positions[i * 3 + 2] = radius * Math.cos(phi);
+
+            color.setHSL(0.1, 0.1, Math.random() * 0.5 + 1);
+            colors[i * 3] = color.r;
+            colors[i * 3 + 1] = color.g;
+            colors[i * 3 + 2] = color.b;
+
+            sizes[i] = Math.random() * 3 + 5;
+        }
+
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+        const material = new THREE.PointsMaterial({
+            size: 3,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.9,
+            sizeAttenuation: true,
+        });
+
+        const stars = new THREE.Points(geometry, material);
+        starsRef.current = stars;
+        scene.add(stars);
+    };
 
     const initGlobe = (container: HTMLDivElement) => {
         if (sceneRef.current) {
@@ -84,6 +130,9 @@ export function GlobeProvider({ children }: { children: React.ReactNode }) {
         scene.background = new THREE.Color(0x040d21);
         scene.fog = new THREE.Fog(0x535ef3, 400, 1000);
         sceneRef.current = scene;
+
+        //Звездный фон
+        createStars(scene);
 
         //Инициализация камеры
         const camera = new THREE.PerspectiveCamera(
@@ -212,6 +261,16 @@ export function GlobeProvider({ children }: { children: React.ReactNode }) {
                     : 0;
             camera.position.y += (-mousePosition.current.y / 2 - camera.position.y) * 0.005;
             camera.lookAt(scene.position);
+
+            // Анимация мерцания звезд
+            if (starsRef.current) {
+                const stars = starsRef.current;
+                const sizes = stars.geometry.attributes.size.array as Float32Array;
+                for (let i = 0; i < sizes.length; i += 100) {
+                    sizes[i] = Math.random() * 3 + 5;
+                }
+                stars.geometry.attributes.size.needsUpdate = true;
+            }
 
             controls.update();
             renderer.render(scene, camera);

@@ -12,12 +12,12 @@ const Navbar = () => {
                 {/* Логотип */}
                 <Link
                     href="/"
-                    className="text-white text-xl font-bold hover:text-blue-300 transition"
+                    className="text-white text-2xl font-bold hover:text-blue-300 transition"
                 >
                     Oil Spill <b className="font-bold text-purple-400">AI</b>
                 </Link>
                 {/* Навигационные ссылки */}
-                <div className="flex space-x-30">
+                <div className="text-xl flex space-x-30">
                     <Link
                         href="/about"
                         className={`transition ${pathname === '/about' ? 'text-blue-300 font-medium' : 'text-white hover:text-blue-300'}`}

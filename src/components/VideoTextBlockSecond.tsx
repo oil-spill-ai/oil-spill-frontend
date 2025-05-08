@@ -11,8 +11,7 @@ const VideoTextBlockSecond = () => {
             "These spills have devastating effects on marine ecosystems, harming wildlife, disrupting habitats, and contaminating water sources.",
             "The environmental impact of such incidents can be long-lasting, affecting not only marine life but also coastal communities that rely on healthy oceans for their livelihoods."
         ],
-        buttonText: "Запросить демо",
-        videoSrc: "/videos/tanker1.mp4"
+        videoSrc: "/videos/tanker2.mp4"
     };
 
     const containerVariants = {
@@ -38,7 +37,7 @@ const VideoTextBlockSecond = () => {
     };
 
     return (
-        <section className="w-full bg-[##050C1B] text-white py-20 px-4 sm:px-6">
+        <section className="w-full bg-gray-950 text-white py-20 px-4 sm:px-6">
             <motion.div
                 initial="hidden"
                 whileInView="visible"
@@ -67,11 +66,11 @@ const VideoTextBlockSecond = () => {
 
                     <motion.div
                         variants={containerVariants}
-                        className="w-full lg:flex-1 space-y-6"
+                        className="w-full lg:flex-1 space-y-8 flex flex-col items-end text-right"
                     >
                         <motion.h2
                             variants={itemVariants}
-                            className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-amber-400 to-pink-600 bg-clip-text text-transparent"
+                            className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-amber-400 to-pink-600 bg-clip-text text-transparent mb-6 leading-[1.3]"
                         >
                             {content.title}
                         </motion.h2>
