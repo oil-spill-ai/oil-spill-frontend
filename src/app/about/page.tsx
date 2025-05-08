@@ -127,17 +127,15 @@ const AboutPage = () => {
                     <h2 className="text-3xl md:text-4xl font-bold mb-8 text-blue-300">
                         Technology Details
                     </h2>
-                    <div className="space-y-6 text-xl text-gray-200 leading-relaxed">
+                    <div className="space-y-6 text-xl text-gray-200 leading-relaxed text-justify">
                         <p>
-                            Our neural network uses a modified U-Net architecture with attention
-                            to key areas, allowing accurate segmentation of oil spills even on
-                            heterogeneous water surfaces.
+                            Our neural network uses a modified YOLOv11 architecture to segment oil slicks in satellite images.
+                            The model is trained taking into account different water areas, which allows it to accurately segment oil slicks even on heterogeneous water surfaces.
                         </p>
                         <p>
-                            The algorithm highlights pollution with colored contours (default -
-                            <span className="text-red-400"> red</span> for fresh spills and
-                            <span className="text-amber-400"> orange</span> for dispersed ones),
-                            indicating the area in square kilometers.
+                            The algorithm highlights the contamination with a colored outline (by default -
+                            <span className="text-blue-300"> blue</span>)
+                            and displays its confidence that there really is an oil slick in this area.
                         </p>
                         <p>
                             The system accounts for sea waves, sun glares and other interference,

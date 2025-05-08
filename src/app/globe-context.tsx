@@ -136,12 +136,12 @@ export function GlobeProvider({ children }: { children: React.ReactNode }) {
 
         //Инициализация камеры
         const camera = new THREE.PerspectiveCamera(
-            90,
+            80,
             window.innerWidth / window.innerHeight,
             0.1,
             1000
         );
-        camera.position.set(0, 0, 100);
+        camera.position.set(0, 0, 500);
         cameraRef.current = camera;
 
         //Свет

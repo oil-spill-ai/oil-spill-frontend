@@ -54,7 +54,7 @@ const Tooltip: React.FC<TooltipProps> = ({
                         exit={{ opacity: 0, y: position === "top" ? -10 : 10 }}
                         transition={{ duration: 0.25, ease: "easeOut" }}
                         className={`
-              absolute z-30 w-96 p-6 text-base
+              absolute z-30 w-110 p-6 text-base
               bg-gradient-to-br from-gray-800 to-gray-900
               border-2 border-gray-600 rounded-xl shadow-2xl
               backdrop-blur-sm ${positionClasses[position]}
