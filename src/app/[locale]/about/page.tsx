@@ -5,9 +5,12 @@ import { motion } from "framer-motion";
 import { FaOilCan, FaWater, FaRobot, FaChartLine } from "react-icons/fa";
 import UploadModal from "@/components/UploadModal";
 import Tooltip from "@/components/Tooltip";
-import { handleUpload } from "../api/uploadService";
+import { handleUpload } from "../../api/uploadService";
+import { useTranslations } from "next-intl";
 
 const AboutPage = () => {
+    const t = useTranslations("AboutPage");
+
     const container = {
         hidden: { opacity: 0 },
         visible: {
@@ -29,28 +32,28 @@ const AboutPage = () => {
 
     const features = [
         {
+            key: "waterAnalysis",
             icon: <FaWater className="text-4xl mb-4 text-blue-300" />,
-            title: "Water surface analysis",
-            text: "Scanning of satellite and aerial photographs in various spectral ranges",
-            tooltip: "Our system analyzes images in visible, infrared and ultraviolet spectra to detect even minor surface anomalies. Special algorithms enhance contrast and highlight potential pollution areas."
+            title: t("features.analysis.title"),
+            text: t("features.analysis.text")
         },
         {
+            key: "aiProcessing",
             icon: <FaRobot className="text-4xl mb-4 text-emerald-300" />,
-            title: "AI processing",
-            text: "The neural network analyzes images with an accuracy of 98.7%",
-            tooltip: "The deep learning model was trained on over 50,000 annotated images of oil spills. It can distinguish between oil slicks, algae blooms, and natural surface phenomena with high precision."
+            title: t("features.ai.title"),
+            text: t("features.ai.text")
         },
         {
+            key: "spotDetection",
             icon: <FaOilCan className="text-4xl mb-4 text-amber-300" />,
-            title: "Spot detection",
-            text: "Automatic detection and classification of oil pollution",
-            tooltip: "The system classifies spills by type (crude oil, refined products, dispersants) and age (fresh spills show different spectral characteristics than weathered ones)."
+            title: t("features.detection.title"),
+            text: t("features.detection.text")
         },
         {
+            key: "visualization",
             icon: <FaChartLine className="text-4xl mb-4 text-purple-300" />,
-            title: "Visualization",
-            text: "Generating reports with allocation of polluted zones",
-            tooltip: "Interactive maps show spill locations with estimated size and trajectory predictions. Reports include statistics, historical comparisons, and recommended response actions."
+            title: t("features.visualization.title"),
+            text: t("features.visualization.text")
         }
     ];
 
@@ -68,13 +71,13 @@ const AboutPage = () => {
                         variants={item}
                         className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400 leading-relaxed"
                     >
-                        Oil slick detection technology
+                        {t("heroTitle")}
                     </motion.h1>
                     <motion.p
                         variants={item}
                         className="text-xl md:text-2xl max-w-4xl mx-auto text-blue-100"
                     >
-                        An innovative solution for monitoring water surfaces using artificial intelligence
+                        {t("heroSubtitle")}
                     </motion.p>
                 </motion.div>
             </section>
@@ -88,23 +91,22 @@ const AboutPage = () => {
                     viewport={{ once: true }}
                     className="text-4xl md:text-5xl font-bold mb-16 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400 leading-relaxed"
                 >
-                    How our system works?
+                    {t("howItWorks")}
                 </motion.h2>
-
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {features.map((feature, index) => (
-                        <Tooltip key={index} content={feature.tooltip}>
+                        <Tooltip key={index} contentKey={feature.key}>
                             <motion.div
                                 initial={{ opacity: 0, y: 50 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, delay: index * 0.1 }}
                                 viewport={{ once: true }}
                                 className={`
-                  bg-gray-800/40 p-8 rounded-2xl 
-                  backdrop-blur-sm border-2 border-gray-600 
-                  hover:border-blue-400/50 transition-all
-                  h-full flex flex-col items-center text-center
-                `}
+                                    bg-gray-800/40 p-8 rounded-2xl 
+                                    backdrop-blur-sm border-2 border-gray-600 
+                                    hover:border-blue-400/50 transition-all
+                                    h-full flex flex-col items-center text-center
+                                `}
                             >
                                 <div className="mb-6 text-5xl">{feature.icon}</div>
                                 <h3 className="text-2xl font-bold mb-4 text-white">{feature.title}</h3>
@@ -125,22 +127,12 @@ const AboutPage = () => {
                     className="bg-gray-800/30 p-10 rounded-2xl border-2 border-gray-600 backdrop-blur-sm"
                 >
                     <h2 className="text-3xl md:text-4xl font-bold mb-8 text-blue-300">
-                        Technology Details
+                        {t("technologyTitle")}
                     </h2>
                     <div className="space-y-6 text-xl text-gray-200 leading-relaxed text-justify">
-                        <p>
-                            Our neural network uses a modified YOLOv11 architecture to segment oil slicks in satellite images.
-                            The model is trained taking into account different water areas, which allows it to accurately segment oil slicks even on heterogeneous water surfaces.
-                        </p>
-                        <p>
-                            The algorithm highlights the contamination with a colored outline (by default -
-                            <span className="text-blue-300"> blue</span>)
-                            and displays its confidence that there really is an oil slick in this area.
-                        </p>
-                        <p>
-                            The system accounts for sea waves, sun glares and other interference,
-                            minimizing false positives.
-                        </p>
+                        <p>{t("technologyText1")}</p>
+                        <p>{t("technologyText2")}</p>
+                        <p>{t("technologyText3")}</p>
                     </div>
                 </motion.div>
             </section>
@@ -155,17 +147,16 @@ const AboutPage = () => {
                     className="max-w-4xl mx-auto"
                 >
                     <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                        Are you ready to try our technology?
+                        {t("ctaTitle")}
                     </h2>
                     <button
                         onClick={() => setIsModalOpen(true)}
                         className="mt-8 px-10 py-4 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full text-xl font-bold hover:scale-105 transition-transform shadow-lg hover:shadow-emerald-500/20"
                     >
-                        Upload Archive
+                        {t("uploadButton")}
                     </button>
                 </motion.div>
             </section>
-
             <UploadModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}

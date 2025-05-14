@@ -1,0 +1,128 @@
+{
+  "Navbar": {
+    "home": "Home",
+    "about": "About",
+    "team": "Our Team",
+    "language": "Language"
+  },
+  "HeroSection": {
+    "title": "Detecting Pollution, Protecting Our Waters",
+    "uploadButton": "Upload Archive"
+  },
+  "UploadModal": {
+    "title": "Upload the archive",
+    "supportedFormats": "Supported formats: .zip, .rar, .7z",
+    "dragText": "Drag and drop the file here or click to select",
+    "maxSize": "Maximum size: 50MB",
+    "selectFile": "Select file",
+    "defaultStatus": "Select the file to download",
+    "readyStatus": "Ready to download",
+    "loadingStatus": "Loading...",
+    "cancel": "Cancel",
+    "upload": "Upload",
+    "success": "The file has been uploaded successfully!",
+    "error": "File upload error. Please try again.",
+    "noFileError": "Please select the file first."
+  },
+  "VideoBlocks": {
+    "firstBlock": {
+      "title": "Oil transportation today",
+      "description1": "Maritime transportation accounts for a significant portion of global oil shipments, with over 60% of crude oil and refined products transported by sea.",
+      "description2": "This dominance highlights the critical role of shipping in the energy sector, as it enables countries to access vital resources efficiently and cost-effectively."
+    },
+    "secondBlock": {
+      "title": "The danger of oil shipping",
+      "description1": "However, maritime oil transportation is not without its risks, as accidents unfortunately do occur, leading to oil spills in the ocean.",
+      "description2": "These spills have devastating effects on marine ecosystems, harming wildlife, disrupting habitats, and contaminating water sources.",
+      "description3": "The environmental impact of such incidents can be long-lasting, affecting not only marine life but also coastal communities that rely on healthy oceans for their livelihoods."
+    },
+    "thirdBlock": {
+      "title": "Our solution to the problem",
+      "description1": "We propose using artificial intelligence on satellites to detect oil spills and monitor the environment.",
+      "description2": "Satellites orbiting the Earth continuously scan vast areas of water bodies, taking high-resolution images.",
+      "description3": "The neural network Oil Spill AI processes these images in real time, detecting even the smallest oil spots that may pose a threat to marine ecosystems."
+    }
+  },
+  "AboutPage": {
+    "heroTitle": "Oil slick detection technology",
+    "heroSubtitle": "An innovative solution for monitoring water surfaces using artificial intelligence",
+    "howItWorks": "How our system works?",
+    "uploadButton": "Upload Archive",
+    "features": {
+      "analysis": {
+        "title": "Water surface analysis",
+        "text": "Scanning of satellite and aerial photographs in various spectral ranges"
+      },
+      "ai": {
+        "title": "AI processing",
+        "text": "The neural network analyzes images with an accuracy of 98.7%"
+      },
+      "detection": {
+        "title": "Spot detection",
+        "text": "Automatic detection and classification of oil pollution"
+      },
+      "visualization": {
+        "title": "Visualization",
+        "text": "Generating reports with allocation of polluted zones"
+      }
+    },
+    "technologyTitle": "Technology Details",
+    "technologyText1": "Our neural network uses a modified YOLOv11 architecture to segment oil slicks in satellite images. The model is trained taking into account different water areas, which allows it to accurately segment oil slicks even on heterogeneous water surfaces.",
+    "technologyText2": "The algorithm highlights the contamination with a colored outline (by default - blue) and displays its confidence that there really is an oil slick in this area.",
+    "technologyText3": "The system accounts for sea waves, sun glares and other interference, minimizing false positives.",
+    "ctaTitle": "Are you ready to try our technology?"
+  },
+  "TeamPage": {
+    "heroTitle": "Our team",
+    "heroSubtitle": "The enthusiasts behind Oil Slick Detection Technology",
+    "meetTeam": "Meet our team",
+    "team": {
+      "shorin": {
+        "name": "Sergey Shorin",
+        "bio": "-"
+      },
+      "borisov": {
+        "name": "Nikita Borisov",
+        "bio": "<p>My name is Nikita Borisov. I am a DevOps developer in the team. I am engaged in the entire infrastructure and automation of various processes. I study at the Moscow Aviation Institute at the Information Security Faculty.</p><p>Our project is aimed at improving the ability to detect oil spills and increasing the speed of making accurate decisions.</p><p>In the process of creating the project, I actively used Docker, k8s, Docker-compose, Prometheus, Grafana and Yandex cloud.</p>"
+      },
+      "anisimov": {
+        "name": "Ivan Anisimov",
+        "bio": "<p>My name is Ivan Anisimov. In our team, I am responsible for machine learning, developing and training neural networks. I study at the Moscow Aviation Institute, in the M3O-332B-22 group.</p><p>My main task is to train the YOLOv11 model for accurate segmentation of oil spills on satellite images. For this, I used the Ultralytics library. This part of the work is extremely important, because the efficiency of the entire system depends on the quality of pollution detection.</p><p>In my free time, I enjoy sports, especially football and tennis. I love history, often listen to music and find inspiration in different genres.</p><p>I am sure that our project will bring real benefits to the environment, helping to promptly identify and eliminate oil spills.</p>"
+      },
+      "mitrofanov": {
+        "name": "Bogdan Mitrofanov",
+        "bio": "<p>My name is Mitrofanov Bogdan. In our team, I hold the position of senior backend developer. I am studying in the joint program of the Moscow Aviation Institute and the Shanghai Central Technical University in Aerospace Engineering. I am interested in programming and music, I love studying languages and space.</p><p>I believe that our project can make a significant contribution to the ecology of the planet with proper development and scaling. The growth potential is huge, since the problem of oil emissions into water remains relevant, which is confirmed by recent world news.</p><p>During the development process, I used technologies such as Python and FastAPI.</p>"
+      },
+      "yashin": {
+        "name": "Sergey Yashin",
+        "bio": "<p>My name is Sergey Yashin. In our team, I am engaged in the external component of our project. I hold the position of senior frontend developer. I study at the Moscow Aviation Institute in group M3O-332B-22. I am interested in the frontend component of Web resources, 3D modeling, I like to read and walk.</p><p>I believe that the project we are working on is very useful for the environment. With its help, it will be possible to more easily detect oil spills on the water surface of the planet and, accordingly, eliminate them, which will have an extremely positive effect on the environment.</p><p>When developing the project, I used React and Next.js technologies. Also, to visualize the 3D model, I needed the Three.js library.</p>"
+      },
+      "tokarev": {
+        "name": "Vladislav Tokarev",
+        "bio": "<p>My name is Vladislav Tokarev. In our team, I am training the YOLOv11 model as an ml-engineer. I study at the Moscow Aviation Institute in the M7O-402S-21 group. I am interested in computer vision, drones, and I also play basketball.</p><p>I believe that our project will be very useful in the field of environmental monitoring. With its help, it will be possible to automate the search for oil spills without human intervention, which is relevant now.</p><p>When developing the project, I used the PyTorch framework, as well as the Ultralytics library.</p>"
+      },
+      "krylov": {
+        "name": "Artem Krylov",
+        "bio": "<p>My name is Artem Krylov. In our team, I am engaged in backend development. I study at the Moscow Aviation Institute in the M3O-310B-22 group. I am interested in programming and studying English, I love sports tourism and playing the guitar.</p><p>I think that our project, which we are implementing, is useful for the environment. With its help, it will be possible to more easily detect oil pollution on the water surface of the planet and, accordingly, eliminate it, which will have an extremely positive effect on the environment.</p><p>When developing the project, I used Python and FastAPI technologies, as well as Celery for asynchronous task execution.</p>"
+      },
+      "ivanchenko": {
+        "name": "Dmitry Ivanchenko",
+        "bio": "<p>My name is Ivanchenko Dmitry. In our team, I do backend development. I study at the Moscow Aviation Institute in group M3O-332B-22. I am interested in programming, I like to play football and just relax in my free time.</p><p>I believe that our project is extremely important because it helps to combat one of the serious environmental problems - oil pollution of water bodies. Such pollution causes great harm to marine ecosystems, threatens the lives of animals and can even affect the climate.</p><p>When developing the project, I used Python and FastAPI.</p>"
+      },
+      "chikunov": {
+        "name": "Yuri Chikunov",
+        "bio": "<p>My name is Yuri Chikunov, in our team I am engaged in frontend development. At the moment I am a student of the Moscow Aviation Institute, group M3O-221B-23. I am fond of web layout, design, exact sciences and music.</p><p>I believe that our project will be very useful for monitoring the state of the environment: with its help it is possible to process satellite images, identifying oil pollution on the water surface of the planet. The elimination of oil spills is the main task of preserving the ecology of the planet.</p><p>My task is to make our project understandable and easy to use. In the layout of web interfaces I used React, Next.js for building the page architecture, Axios for working with HTTP requests, and Tailwind CSS in combination with shadsn/ui for styling components.</p>"
+      },
+      "titova": {
+        "name": "Polina Titova",
+        "bio": "<p>My name is Polina Titova, and I am responsible for creating and maintaining technical documentation in our team. My role is a technical writer. I am a student at the Moscow Aviation Institute, studying in the M6O-221BV-23 group. In my free time, I enjoy kettlebell lifting, outdoor activities, and dancing. I am also mastering 3D modeling in the KOMPAS program.</p><p>I consider our project to be extremely promising and beneficial for the environment, and I really hope that its implementation will not stop at the university level. But it will go further and will be able to gain a foothold in large companies, as a basis for developing and implementing larger-scale and more effective solutions for the protection of water resources.</p>"
+      }
+    }
+  },
+  "Tooltips": {
+    "waterAnalysis": "Our system analyzes images in visible, infrared and ultraviolet spectra to detect even minor surface anomalies. Special algorithms enhance contrast and highlight potential pollution areas.",
+    "aiProcessing": "The deep learning model was trained on over 50,000 annotated images of oil spills. It can distinguish between oil slicks, algae blooms, and natural surface phenomena with high precision.",
+    "spotDetection": "The system classifies spills by type (crude oil, refined products, dispersants) and age (fresh spills show different spectral characteristics than weathered ones).",
+    "visualization": "Interactive maps show spill locations with estimated size and trajectory predictions. Reports include statistics, historical comparisons, and recommended response actions."
+  }
+}

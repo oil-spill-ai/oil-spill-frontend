@@ -1,8 +1,8 @@
-import Planet from '../components/Planet';
-import HeroSection from '../components/HeroSection';
-import VideoTextBlockFirst from '../components/VideoTextBlockFirst';
-import VideoTextBlockSecond from '../components/VideoTextBlockSecond';
-import VideoTextBlockThird from '../components/VideoTextBlockThird';
+import Planet from '../../components/Planet';
+import HeroSection from '../../components/HeroSection';
+import VideoTextBlockFirst from '../../components/VideoTextBlockFirst';
+import VideoTextBlockSecond from '../../components/VideoTextBlockSecond';
+import VideoTextBlockThird from '../../components/VideoTextBlockThird';
 import React from "react";
 
 const Home: React.FC = () => {

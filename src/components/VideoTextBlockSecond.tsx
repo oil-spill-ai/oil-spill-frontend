@@ -2,17 +2,10 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 const VideoTextBlockSecond = () => {
-    const content = {
-        title: "The danger of oil shipping",
-        description: [
-            "However, maritime oil transportation is not without its risks, as accidents unfortunately do occur, leading to oil spills in the ocean.",
-            "These spills have devastating effects on marine ecosystems, harming wildlife, disrupting habitats, and contaminating water sources.",
-            "The environmental impact of such incidents can be long-lasting, affecting not only marine life but also coastal communities that rely on healthy oceans for their livelihoods."
-        ],
-        videoSrc: "/videos/tanker2.mp4"
-    };
+    const t = useTranslations("VideoBlocks.secondBlock");
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -58,12 +51,11 @@ const VideoTextBlockSecond = () => {
                                 muted
                                 playsInline
                             >
-                                <source src={content.videoSrc} type="video/mp4" />
+                                <source src="/videos/tanker2.mp4" type="video/mp4" />
                                 Your browser does not support video.
                             </video>
                         </div>
                     </motion.div>
-
                     <motion.div
                         variants={containerVariants}
                         className="w-full lg:flex-1 space-y-8 flex flex-col items-end text-right"
@@ -72,18 +64,26 @@ const VideoTextBlockSecond = () => {
                             variants={itemVariants}
                             className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-amber-400 to-pink-600 bg-clip-text text-transparent mb-6 leading-[1.3]"
                         >
-                            {content.title}
+                            {t("title")}
                         </motion.h2>
-
-                        {content.description.map((paragraph, index) => (
-                            <motion.p
-                                key={index}
-                                variants={itemVariants}
-                                className="text-xl text-gray-300 leading-relaxed"
-                            >
-                                {paragraph}
-                            </motion.p>
-                        ))}
+                        <motion.p
+                            variants={itemVariants}
+                            className="text-xl text-gray-300 leading-relaxed"
+                        >
+                            {t("description1")}
+                        </motion.p>
+                        <motion.p
+                            variants={itemVariants}
+                            className="text-xl text-gray-300 leading-relaxed"
+                        >
+                            {t("description2")}
+                        </motion.p>
+                        <motion.p
+                            variants={itemVariants}
+                            className="text-xl text-gray-300 leading-relaxed"
+                        >
+                            {t("description3")}
+                        </motion.p>
                     </motion.div>
                 </div>
             </motion.div>

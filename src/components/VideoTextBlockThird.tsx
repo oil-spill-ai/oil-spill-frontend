@@ -2,17 +2,10 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 const VideoTextBlockFirst = () => {
-    const content = {
-        title: "Our solution to the problem",
-        description: [
-            "We propose using artificial intelligence on satellites to detect oil spills and monitor the environment.",
-            "Satellites orbiting the Earth continuously scan vast areas of water bodies, taking high-resolution images.",
-            "The neural network Oil Spill AI processes these images in real time, detecting even the smallest oil spots that may pose a threat to marine ecosystems."
-        ],
-        videoSrc: "/videos/tanker1.mp4"
-    };
+    const t = useTranslations("VideoBlocks.thirdBlock");
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -58,12 +51,11 @@ const VideoTextBlockFirst = () => {
                                 muted
                                 playsInline
                             >
-                                <source src={content.videoSrc} type="video/mp4" />
+                                <source src="/videos/tanker1.mp4" type="video/mp4" />
                                 Your browser does not support video.
                             </video>
                         </div>
                     </motion.div>
-
                     <motion.div
                         variants={containerVariants}
                         className="w-full lg:flex-1 space-y-8"
@@ -72,18 +64,26 @@ const VideoTextBlockFirst = () => {
                             variants={itemVariants}
                             className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-lime-400 to-emerald-700 bg-clip-text text-transparent mb-6 leading-[1.3]"
                         >
-                            {content.title}
+                            {t("title")}
                         </motion.h2>
-
-                        {content.description.map((paragraph, index) => (
-                            <motion.p
-                                key={index}
-                                variants={itemVariants}
-                                className="text-xl text-gray-300 leading-relaxed"
-                            >
-                                {paragraph}
-                            </motion.p>
-                        ))}
+                        <motion.p
+                            variants={itemVariants}
+                            className="text-xl text-gray-300 leading-relaxed"
+                        >
+                            {t("description1")}
+                        </motion.p>
+                        <motion.p
+                            variants={itemVariants}
+                            className="text-xl text-gray-300 leading-relaxed"
+                        >
+                            {t("description2")}
+                        </motion.p>
+                        <motion.p
+                            variants={itemVariants}
+                            className="text-xl text-gray-300 leading-relaxed"
+                        >
+                            {t("description3")}
+                        </motion.p>
                     </motion.div>
                 </div>
             </motion.div>

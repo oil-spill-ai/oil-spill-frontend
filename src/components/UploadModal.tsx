@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useState, useEffect } from "react";
 import { FiUpload, FiX, FiCheck, FiAlertCircle } from "react-icons/fi";
+import { useTranslations } from "next-intl";
 
 interface UploadModalProps {
     isOpen: boolean;
@@ -11,11 +12,12 @@ interface UploadModalProps {
 }
 
 const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, onUpload }) => {
+    const t = useTranslations("UploadModal");
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [progress, setProgress] = useState(0);
-    const [status, setStatus] = useState("Select the file to download");
+    const [status, setStatus] = useState(t("defaultStatus"));
     const [dragActive, setDragActive] = useState(false);
 
     const handleDrag = (e: React.DragEvent) => {
@@ -35,7 +37,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, onUpload }) 
         if (e.dataTransfer.files && e.dataTransfer.files[0]) {
             setSelectedFile(e.dataTransfer.files[0]);
             setError(null);
-            setStatus("Ready to download");
+            setStatus(t("readyStatus"));
         }
     };
 
@@ -43,27 +45,27 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, onUpload }) 
         if (e.target.files && e.target.files.length > 0) {
             setSelectedFile(e.target.files[0]);
             setError(null);
-            setStatus("Ready to download");
+            setStatus(t("readyStatus"));
         }
     };
 
     const handleSubmit = async () => {
         if (!selectedFile) {
-            setError("Please select the file first.");
+            setError(t("noFileError"));
             return;
         }
 
         setIsLoading(true);
         setError(null);
         setProgress(0);
-        setStatus("Loading...");
+        setStatus(t("loadingStatus"));
 
         try {
             const result = await onUpload(selectedFile);
             setProgress(result.progress);
             setStatus(result.status);
         } catch (err) {
-            setError("File upload error. Please try again.");
+            setError(t("error"));
             console.error("Upload error:", err);
         } finally {
             setIsLoading(false);
@@ -74,10 +76,10 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, onUpload }) 
         if (!isOpen) {
             setSelectedFile(null);
             setProgress(0);
-            setStatus("Select the file to download");
+            setStatus(t("defaultStatus"));
             setError(null);
         }
-    }, [isOpen]);
+    }, [isOpen, t]);
 
     return (
         <AnimatePresence>
@@ -106,7 +108,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, onUpload }) 
                                 <div className="flex items-center justify-between">
                                     <h2 className="text-2xl font-bold text-white">
                                         <FiUpload className="inline mr-2" />
-                                        Upload the archive
+                                        {t("title")}
                                     </h2>
                                     <button
                                         onClick={onClose}
@@ -116,7 +118,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, onUpload }) 
                                     </button>
                                 </div>
                                 <p className="flex justify-start text-gray-400 mt-1">
-                                    Supported formats: .zip, .rar, .7z
+                                    {t("supportedFormats")}
                                 </p>
                             </div>
 
@@ -143,10 +145,10 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, onUpload }) 
                                     <p className="text-gray-300 mb-2">
                                         {selectedFile
                                             ? selectedFile.name
-                                            : "Drag and drop the file here or click to select"}
+                                            : t("dragText")}
                                     </p>
-                                    <p className=" text-gray-500">
-                                        Maximum size: 50MB
+                                    <p className="text-gray-500">
+                                        {t("maxSize")}
                                     </p>
                                     <input
                                         type="file"
@@ -159,7 +161,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, onUpload }) 
                                         htmlFor="file-upload"
                                         className="inline-block mt-4 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-md text-white cursor-pointer transition-colors"
                                     >
-                                        Select file
+                                        {t("selectFile")}
                                     </label>
                                 </div>
 
@@ -191,7 +193,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, onUpload }) 
                                 {progress === 100 && (
                                     <div className="mt-4 flex items-center text-green-400 text-sm">
                                         <FiCheck className="mr-2" />
-                                        The file has been uploaded successfully!
+                                        {t("success")}
                                     </div>
                                 )}
                             </div>
@@ -203,14 +205,14 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, onUpload }) 
                                     disabled={isLoading}
                                     className="px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-white transition-colors disabled:opacity-50"
                                 >
-                                    Cancel
+                                    {t("cancel")}
                                 </button>
                                 <button
                                     onClick={handleSubmit}
                                     disabled={isLoading || !selectedFile || progress === 100}
                                     className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-medium transition-all disabled:opacity-50"
                                 >
-                                    {isLoading ? "Loading..." : "Upload"}
+                                    {isLoading ? t("loadingStatus") : t("upload")}
                                 </button>
                             </div>
                         </motion.div>

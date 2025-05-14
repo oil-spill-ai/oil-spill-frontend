@@ -2,16 +2,10 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 const VideoTextBlockFirst = () => {
-    const content = {
-        title: "Oil transportation today",
-        description: [
-            "Maritime transportation accounts for a significant portion of global oil shipments, with over 60% of crude oil and refined products transported by sea.",
-            "This dominance highlights the critical role of shipping in the energy sector, as it enables countries to access vital resources efficiently and cost-effectively."
-        ],
-        videoSrc: "/videos/tanker1.mp4"
-    };
+    const t = useTranslations("VideoBlocks.firstBlock");
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -57,12 +51,11 @@ const VideoTextBlockFirst = () => {
                                 muted
                                 playsInline
                             >
-                                <source src={content.videoSrc} type="video/mp4" />
+                                <source src="/videos/tanker1.mp4" type="video/mp4" />
                                 Your browser does not support video.
                             </video>
                         </div>
                     </motion.div>
-
                     <motion.div
                         variants={containerVariants}
                         className="w-full lg:flex-1 space-y-8"
@@ -71,18 +64,20 @@ const VideoTextBlockFirst = () => {
                             variants={itemVariants}
                             className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent mb-6 leading-[1.3]"
                         >
-                            {content.title}
+                            {t("title")}
                         </motion.h2>
-
-                        {content.description.map((paragraph, index) => (
-                            <motion.p
-                                key={index}
-                                variants={itemVariants}
-                                className="text-xl text-gray-300 leading-relaxed"
-                            >
-                                {paragraph}
-                            </motion.p>
-                        ))}
+                        <motion.p
+                            variants={itemVariants}
+                            className="text-xl text-gray-300 leading-relaxed"
+                        >
+                            {t("description1")}
+                        </motion.p>
+                        <motion.p
+                            variants={itemVariants}
+                            className="text-xl text-gray-300 leading-relaxed"
+                        >
+                            {t("description2")}
+                        </motion.p>
                     </motion.div>
                 </div>
             </motion.div>
