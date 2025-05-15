@@ -2,7 +2,10 @@
 
 import React, { createContext, useContext, useRef, useEffect } from "react";
 import * as THREE from "three";
-import ThreeGlobe from "three-globe";
+let ThreeGlobe: any;
+if (typeof window !== 'undefined') {
+  ThreeGlobe = require('three-globe').default;
+}
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import countries from "@/geo-files/custom.geo.json";
 import lines from "@/geo-files/lines.json";
@@ -13,7 +16,7 @@ type GlobeContextType = {
     renderer: THREE.WebGLRenderer | null;
     camera: THREE.PerspectiveCamera | null;
     controls: OrbitControls | null;
-    globe: ThreeGlobe | null;
+    globe: typeof ThreeGlobe | null;
     initGlobe: (container: HTMLDivElement) => void;
     cleanup: () => void;
 };
@@ -59,7 +62,7 @@ export function GlobeProvider({ children }: { children: React.ReactNode }) {
     const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
     const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
     const controlsRef = useRef<OrbitControls | null>(null);
-    const globeRef = useRef<ThreeGlobe | null>(null);
+    const globeRef = useRef<typeof ThreeGlobe | null>(null);
     const starsRef = useRef<THREE.Points | null>(null);
     const animationFrameId = useRef<number | null>(null);
     const mousePosition = useRef({ x: 0, y: 0 });
@@ -177,7 +180,7 @@ export function GlobeProvider({ children }: { children: React.ReactNode }) {
         controlsRef.current = controls;
 
         //Инициализация планеты
-        const globe = new ThreeGlobe({ waitForGlobeReady: true, animateIn: true })
+        const globe = new (ThreeGlobe as any)({ waitForGlobeReady: true, animateIn: true })
             .hexPolygonsData(countries.features)
             .hexPolygonResolution(4)
             .hexPolygonMargin(0.4)
