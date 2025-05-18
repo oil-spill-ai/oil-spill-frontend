@@ -12,8 +12,10 @@ interface UploadModalProps {
 }
 
 import { handleUpload } from "../app/api/uploadService";
+import ConfirmDownloadModal from "./ConfirmDownloadModal";
 
 const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
     const t = useTranslations("UploadModal");
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -87,13 +89,51 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
     };
 
     useEffect(() => {
-        if (!isOpen) {
+        if (isOpen) {
             setSelectedFile(null);
             setProgress(0);
             setStatus(t("defaultStatus"));
             setError(null);
+            setDragActive(false);
+            setJobId(null);
+            setUserHash(null);
+            setIsReady(false);
+            setShowConfirmModal(false);
         }
     }, [isOpen, t]);
+
+        // Блокируем закрытие по ESC во время загрузки
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (isLoading && e.key === "Escape") {
+                e.stopPropagation();
+                e.preventDefault();
+            }
+        };
+        if (isOpen) {
+            window.addEventListener("keydown", handleKeyDown, true);
+        }
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown, true);
+        };
+    }, [isLoading, isOpen]);
+
+    // Хендлеры для подтверждающего модального окна
+    const handleTryClose = () => {
+        if (isReady) {
+            setShowConfirmModal(true);
+        } else {
+            onClose();
+        }
+    };
+    const handleConfirmClose = () => {
+        setShowConfirmModal(false);
+        onClose();
+    };
+    const handleCancelClose = () => {
+        setShowConfirmModal(false);
+    };
+
 
     return (
         <AnimatePresence>
@@ -105,7 +145,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
                         animate={{ opacity: 0.5 }}
                         exit={{ opacity: 0 }}
                         className="fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm"
-                        onClick={onClose}
+                        onClick={isLoading ? undefined : handleTryClose}
                     />
 
                     {/* Модальное окно */}
@@ -125,7 +165,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
                                         {t("title")}
                                     </h2>
                                     <button
-                                        onClick={onClose}
+                                        onClick={handleTryClose}
                                         className="text-gray-400 hover:text-white transition-colors"
                                     >
                                         <FiX size={24} />
@@ -139,45 +179,47 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
                             {/* Основное содержимое */}
                             <div className="p-6">
                                 {/* Область перетаскивания */}
-                                <div
-                                    className={`border-2 border-dashed rounded-xl p-8 text-center transition-all ${
-                                        dragActive
-                                            ? "border-blue-500 bg-blue-500/10"
-                                            : "border-gray-600 hover:border-gray-500"
-                                    }`}
-                                    onDragEnter={handleDrag}
-                                    onDragOver={handleDrag}
-                                    onDragLeave={handleDrag}
-                                    onDrop={handleDrop}
-                                >
-                                    <FiUpload
-                                        size={48}
-                                        className={`mx-auto mb-4 ${
-                                            dragActive ? "text-blue-400" : "text-gray-500"
+                                {!isLoading && !isReady && (
+                                    <div
+                                        className={`border-2 border-dashed rounded-xl p-8 text-center transition-all ${
+                                            dragActive
+                                                ? "border-blue-500 bg-blue-500/10"
+                                                : "border-gray-600 hover:border-gray-500"
                                         }`}
-                                    />
-                                    <p className="text-gray-300 mb-2">
-                                        {selectedFile
-                                            ? selectedFile.name
-                                            : t("dragText")}
-                                    </p>
-                                    <p className="text-gray-500">
-                                        {t("maxSize")}
-                                    </p>
-                                    <input
-                                        type="file"
-                                        onChange={handleFileChange}
-                                        className="hidden"
-                                        id="file-upload"
-                                        accept=".zip,.rar,.7z"
-                                    />
-                                    <label
-                                        htmlFor="file-upload"
-                                        className="inline-block mt-4 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-md text-white cursor-pointer transition-colors"
+                                        onDragEnter={handleDrag}
+                                        onDragOver={handleDrag}
+                                        onDragLeave={handleDrag}
+                                        onDrop={handleDrop}
                                     >
-                                        {t("selectFile")}
-                                    </label>
-                                </div>
+                                        <FiUpload
+                                            size={48}
+                                            className={`mx-auto mb-4 ${
+                                                dragActive ? "text-blue-400" : "text-gray-500"
+                                            }`}
+                                        />
+                                        <p className="text-gray-300 mb-2">
+                                            {selectedFile
+                                                ? selectedFile.name
+                                                : t("dragText")}
+                                        </p>
+                                        <p className="text-gray-500">
+                                            {t("maxSize")}
+                                        </p>
+                                        <input
+                                            type="file"
+                                            onChange={handleFileChange}
+                                            className="hidden"
+                                            id="file-upload"
+                                            accept=".zip,.rar,.7z"
+                                        />
+                                        <label
+                                            htmlFor="file-upload"
+                                            className="inline-block mt-4 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-md text-white cursor-pointer transition-colors"
+                                        >
+                                            {t("selectFile")}
+                                        </label>
+                                    </div>
+                                )}
 
                                 {/* Индикатор прогресса */}
                                 {isLoading && (
@@ -224,22 +266,30 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
                             </div>
 
                             {/* Футер с кнопками */}
-                            <div className="p-4 bg-gray-800/50 border-t border-gray-700 flex justify-end space-x-3">
-                                <button
-                                    onClick={onClose}
-                                    disabled={isLoading}
-                                    className="px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-white transition-colors disabled:opacity-50"
-                                >
-                                    {t("cancel")}
-                                </button>
-                                <button
-                                    onClick={handleSubmit}
-                                    disabled={isLoading || !selectedFile || progress === 100}
-                                    className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-medium transition-all disabled:opacity-50"
-                                >
-                                    {isLoading ? t("loadingStatus") : t("upload")}
-                                </button>
-                            </div>
+                            {!isLoading && !isReady && (
+                                <div className="p-4 bg-gray-800/50 border-t border-gray-700 flex justify-end space-x-3">
+                                    <button
+                                        onClick={onClose}
+                                        disabled={isLoading}
+                                        className="px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-white transition-colors disabled:opacity-50"
+                                        tabIndex={isLoading ? -1 : 0}
+                                    >
+                                        {t("cancel")}
+                                    </button>
+                                    <button
+                                        onClick={handleSubmit}
+                                        disabled={isLoading || !selectedFile || progress === 100}
+                                        className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-medium transition-all disabled:opacity-50"
+                                    >
+                                        {isLoading ? t("loadingStatus") : t("upload")}
+                                    </button>
+                                </div>
+                            )}
+                            <ConfirmDownloadModal
+                                isOpen={showConfirmModal}
+                                onConfirm={handleConfirmClose}
+                                onCancel={handleCancelClose}
+                            />
                         </motion.div>
                     </div>
                 </div>
@@ -247,5 +297,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
         </AnimatePresence>
     );
 };
+
+
 
 export default UploadModal;
