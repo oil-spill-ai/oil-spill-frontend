@@ -11,7 +11,9 @@ interface UploadModalProps {
     onUpload: (file: File) => Promise<{ progress: number; status: string }>;
 }
 
-const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, onUpload }) => {
+import { handleUpload } from "../app/api/uploadService";
+
+const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
     const t = useTranslations("UploadModal");
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -19,6 +21,9 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, onUpload }) 
     const [progress, setProgress] = useState(0);
     const [status, setStatus] = useState(t("defaultStatus"));
     const [dragActive, setDragActive] = useState(false);
+    const [jobId, setJobId] = useState<string | null>(null);
+    const [userHash, setUserHash] = useState<string | null>(null);
+    const [isReady, setIsReady] = useState(false);
 
     const handleDrag = (e: React.DragEvent) => {
         e.preventDefault();
@@ -59,11 +64,20 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, onUpload }) 
         setError(null);
         setProgress(0);
         setStatus(t("loadingStatus"));
+        setJobId(null);
+        setUserHash(null);
+        setIsReady(false);
 
         try {
-            const result = await onUpload(selectedFile);
+            const result = await handleUpload(selectedFile, (progress, status) => {
+                setProgress(progress);
+                setStatus(status);
+            });
             setProgress(result.progress);
             setStatus(result.status);
+            setJobId(result.job_id);
+            setUserHash(result.user_hash);
+            setIsReady(result.isReady);
         } catch (err) {
             setError(t("error"));
             console.error("Upload error:", err);
@@ -190,10 +204,21 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, onUpload }) 
                                 )}
 
                                 {/* Успешная загрузка */}
-                                {progress === 100 && (
-                                    <div className="mt-4 flex items-center text-green-400 text-sm">
-                                        <FiCheck className="mr-2" />
-                                        {t("success")}
+                                {isReady && userHash && (
+                                    <div className="mt-4 flex flex-col items-center text-green-400 text-sm">
+                                        <div className="flex items-center mb-2">
+                                            <FiCheck className="mr-2" />
+                                            {t("success")}
+                                        </div>
+                                        <a
+                                            href={`http://localhost:8000/api/download/${userHash}`}
+                                            className="mt-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-medium transition-all"
+                                            download
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            {t("download")}
+                                        </a>
                                     </div>
                                 )}
                             </div>
