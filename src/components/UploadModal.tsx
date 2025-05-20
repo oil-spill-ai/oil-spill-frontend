@@ -11,7 +11,7 @@ interface UploadModalProps {
     onUpload: (file: File) => Promise<{ progress: number; status: string }>;
 }
 
-import { handleUpload } from "../app/api/uploadService";
+import { handleUpload, getArchiveTimeLeft } from "../app/api/uploadService";
 import ConfirmDownloadModal from "./ConfirmDownloadModal";
 
 const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
@@ -26,6 +26,8 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
     const [jobId, setJobId] = useState<string | null>(null);
     const [userHash, setUserHash] = useState<string | null>(null);
     const [isReady, setIsReady] = useState(false);
+    const [archiveTimeLeft, setArchiveTimeLeft] = useState<number | null>(null);
+    const [archiveUnavailable, setArchiveUnavailable] = useState(false);
 
     const handleDrag = (e: React.DragEvent) => {
         e.preventDefault();
@@ -99,6 +101,8 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
             setUserHash(null);
             setIsReady(false);
             setShowConfirmModal(false);
+            setArchiveTimeLeft(null);
+            setArchiveUnavailable(false);
         }
     }, [isOpen, t]);
 
@@ -117,6 +121,33 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
             window.removeEventListener("keydown", handleKeyDown, true);
         };
     }, [isLoading, isOpen]);
+
+    // Таймер для архива
+    useEffect(() => {
+        let timer: NodeJS.Timeout;
+        if (isReady && userHash) {
+            const fetchTimeLeft = async () => {
+                try {
+                    const res = await getArchiveTimeLeft(userHash);
+                    if (typeof res.seconds_left === 'number') {
+                        setArchiveTimeLeft(res.seconds_left);
+                        if (res.seconds_left <= 0) {
+                            setArchiveUnavailable(true);
+                        }
+                    }
+                } catch (e) {
+                    setArchiveUnavailable(true);
+                }
+            };
+            fetchTimeLeft();
+            timer = setInterval(() => {
+                fetchTimeLeft();
+            }, 1000);
+        }
+        return () => {
+            if (timer) clearInterval(timer);
+        };
+    }, [isReady, userHash]);
 
     // Хендлеры для подтверждающего модального окна
     const handleTryClose = () => {
@@ -252,15 +283,28 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
                                             <FiCheck className="mr-2" />
                                             {t("success")}
                                         </div>
-                                        <a
-                                            href={`http://localhost:8000/api/download/${userHash}`}
-                                            className="mt-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-medium transition-all"
-                                            download
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                        >
-                                            {t("download")}
-                                        </a>
+                                        {archiveUnavailable ? (
+                                            <div className="mt-2 px-4 py-2 rounded-lg bg-red-700 text-white font-medium transition-all">
+                                                архив больше не доступен
+                                            </div>
+                                        ) : (
+                                            <>
+                                                <a
+                                                    href={`http://localhost:8000/api/download/${userHash}`}
+                                                    className="mt-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-medium transition-all"
+                                                    download
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    {t("download")}
+                                                </a>
+                                                {archiveTimeLeft !== null && (
+                                                    <div className="mt-2 text-xs text-gray-300">
+                                                        Архив будет доступен ещё: <span className="font-mono">{formatTime(archiveTimeLeft)}</span>
+                                                    </div>
+                                                )}
+                                            </>
+                                        )}
                                     </div>
                                 )}
                             </div>
@@ -299,5 +343,12 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
 };
 
 
+
+// Форматирование времени для таймера
+function formatTime(seconds: number) {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${s.toString().padStart(2, '0')}`;
+}
 
 export default UploadModal;

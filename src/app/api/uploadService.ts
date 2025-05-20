@@ -1,3 +1,11 @@
+export const getArchiveTimeLeft = async (userHash: string) => {
+    const response = await fetch(`http://localhost:8000/api/archive_time_left/${userHash}`);
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+};
+
 export const getJobStatus = async (jobId: string) => {
     const response = await fetch(`http://localhost:8000/api/status/${jobId}`);
     if (!response.ok) {
