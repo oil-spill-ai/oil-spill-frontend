@@ -26,6 +26,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
     const [jobId, setJobId] = useState<string | null>(null);
     const [userHash, setUserHash] = useState<string | null>(null);
     const [isReady, setIsReady] = useState(false);
+    const ARCHIVE_LIFETIME_SECONDS = 600; // Синхронизировано с backend
     const [archiveTimeLeft, setArchiveTimeLeft] = useState<number | null>(null);
     const [archiveUnavailable, setArchiveUnavailable] = useState(false);
 
@@ -122,36 +123,54 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
         };
     }, [isLoading, isOpen]);
 
-    // Таймер для архива
+    // Таймер для архива: локальный отсчет + синхронизация раз в 30 сек
     useEffect(() => {
-        let timer: NodeJS.Timeout;
-        if (isReady && userHash) {
-            const fetchTimeLeft = async () => {
-                try {
-                    const res = await getArchiveTimeLeft(userHash);
-                    if (typeof res.seconds_left === 'number') {
-                        setArchiveTimeLeft(res.seconds_left);
-                        if (res.seconds_left <= 0) {
-                            setArchiveUnavailable(true);
-                        }
+        let interval: NodeJS.Timeout;
+        let syncInterval: NodeJS.Timeout;
+        let stopped = false;
+
+        const fetchTimeLeft = async () => {
+            try {
+                const res = await getArchiveTimeLeft(userHash!);
+                if (typeof res.seconds_left === 'number') {
+                    setArchiveTimeLeft(res.seconds_left);
+                    if (res.seconds_left <= 0) {
+                        setArchiveUnavailable(true);
+                        stopped = true;
                     }
-                } catch (e) {
-                    setArchiveUnavailable(true);
                 }
-            };
+            } catch (e) {
+                setArchiveUnavailable(true);
+                stopped = true;
+            }
+        };
+
+        if (isReady && userHash) {
             fetchTimeLeft();
-            timer = setInterval(() => {
-                fetchTimeLeft();
+            interval = setInterval(() => {
+                setArchiveTimeLeft(prev => {
+                    if (prev === null) return null;
+                    if (prev <= 1) {
+                        setArchiveUnavailable(true);
+                        stopped = true;
+                        return 0;
+                    }
+                    return prev - 1;
+                });
             }, 1000);
+            syncInterval = setInterval(() => {
+                if (!stopped) fetchTimeLeft();
+            }, 30000); // 30 секунд
         }
         return () => {
-            if (timer) clearInterval(timer);
+            if (interval) clearInterval(interval);
+            if (syncInterval) clearInterval(syncInterval);
         };
     }, [isReady, userHash]);
 
     // Хендлеры для подтверждающего модального окна
     const handleTryClose = () => {
-        if (isReady) {
+        if (isReady && !archiveUnavailable) {
             setShowConfirmModal(true);
         } else {
             onClose();
@@ -298,11 +317,9 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
                                                 >
                                                     {t("download")}
                                                 </a>
-                                                {archiveTimeLeft !== null && (
-                                                    <div className="mt-2 text-xs text-gray-300">
-                                                        Архив будет доступен ещё: <span className="font-mono">{formatTime(archiveTimeLeft)}</span>
-                                                    </div>
-                                                )}
+                                                <div className="mt-2 text-xs text-gray-300">
+                                                    Архив будет доступен ещё: <span className="font-mono">{formatTime(archiveTimeLeft ?? ARCHIVE_LIFETIME_SECONDS)}</span>
+                                                </div>
                                             </>
                                         )}
                                     </div>
