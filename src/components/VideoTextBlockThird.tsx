@@ -51,7 +51,7 @@ const VideoTextBlockFirst = () => {
                                 muted
                                 playsInline
                             >
-                                <source src="/videos/tanker1.mp4" type="video/mp4" />
+                                <source src="/videos/video_3.mp4" type="video/mp4" />
                                 Your browser does not support video.
                             </video>
                         </div>

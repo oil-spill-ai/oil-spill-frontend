@@ -119,10 +119,37 @@
       }
     }
   },
+  "Documentation": {
+    "title": "Technical Documentation",
+    "yoloTitle": "YOLOv11 Architecture",
+    "nnTitle": "Neural Network Training",
+    "pipelineTitle": "Processing Pipeline",
+    "apiTitle": "API Integration",
+    "deploymentTitle": "Deployment Architecture"
+  },
+  "PrivacyPolicy": {
+    "title": "Privacy Policy"
+  },
+  "TermsOfService": {
+    "title": "Terms of Service"
+  },
   "Tooltips": {
     "waterAnalysis": "Our system analyzes images in visible, infrared and ultraviolet spectra to detect even minor surface anomalies. Special algorithms enhance contrast and highlight potential pollution areas.",
     "aiProcessing": "The deep learning model was trained on over 50,000 annotated images of oil spills. It can distinguish between oil slicks, algae blooms, and natural surface phenomena with high precision.",
     "spotDetection": "The system classifies spills by type (crude oil, refined products, dispersants) and age (fresh spills show different spectral characteristics than weathered ones).",
     "visualization": "Interactive maps show spill locations with estimated size and trajectory predictions. Reports include statistics, historical comparisons, and recommended response actions."
+  },
+  "Footer": {
+    "resources": "Resources",
+    "contactUs": "Contact Us",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "documentation": "Documentation",
+    "copyright": "© {year} Oil Spill AI. All rights reserved.",
+    "followUs": "Follow Us",
+    "email": "Email",
+    "address": "Moscow Aviation Institute, Volokolamskoe shosse, 4, Moscow, Russia",
+    "phone": "Phone",
+    "description": "Strive to protect the environment by providing innovative solutions"
   }
 }

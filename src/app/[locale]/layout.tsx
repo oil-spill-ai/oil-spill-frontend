@@ -6,6 +6,7 @@ import { GlobeProvider } from "../globe-context";
 import {NextIntlClientProvider, hasLocale} from 'next-intl';
 import {notFound} from 'next/navigation';
 import {routing} from '@/i18n/routing';
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
     title: "Oil Spill AI",
@@ -29,6 +30,7 @@ export default async function RootLayout({
                     <GlobeProvider>
                         <Navbar />
                         {children}
+                        <Footer />
                     </GlobeProvider>
                 </NextIntlClientProvider>
             </body>
