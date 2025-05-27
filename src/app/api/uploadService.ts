@@ -1,43 +1,78 @@
-export const handleUpload = async (file: File) => {
+export const getArchiveTimeLeft = async (userHash: string) => {
+    const response = await fetch(`http://localhost:8000/api/archive_time_left/${userHash}`);
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+};
+
+export const getJobStatus = async (jobId: string) => {
+    const response = await fetch(`http://localhost:8000/api/status/${jobId}`);
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+};
+
+export const handleUpload = async (file: File, onProgress?: (progress: number, status: string) => void) => {
     const formData = new FormData();
     formData.append("file", file);
+    let progress = 0;
+    let status = "Uploading...";
+    let job_id = "";
+    let user_hash = "";
+    let isReady = false;
 
-    //Создаем объект для отслеживания прогресса
-    const progressTracker = {
-        progress: 0,
-        status: "Uploading..."
-    };
+    if (onProgress) onProgress(progress, status);
 
-    //Функция для обновления прогресса
-    const updateProgress = (progress: number) => {
-        progressTracker.progress = progress;
-        return progressTracker;
-    };
-
-    try {
-        //Симуляция загрузки с прогрессом
-        for (let i = 0; i <= 100; i += 10) {
-            await new Promise(resolve => setTimeout(resolve, 200));
-            updateProgress(i);
-        }
-
-        //Отправка на бэкенд
-        const response = await fetch("http://localhost:8000/api/upload", {
-            method: "POST",
-            body: formData,
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const result = await response.json();
-        console.log("Upload successful:", result);
-
-        // Возвращаем финальный прогресс
-        return { progress: 100, status: "Upload complete!" };
-    } catch (error) {
-        console.error("Upload failed:", error);
-        throw error;
+    // Фейковый прогресс загрузки
+    for (let i = 0; i <= 80; i += 20) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+        progress = i;
+        if (onProgress) onProgress(progress, status);
     }
+
+    // Отправка архива
+    const response = await fetch("http://localhost:8000/api/upload", {
+        method: "POST",
+        body: formData,
+    });
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const result = await response.json();
+    job_id = result.job_id;
+    user_hash = result.user_hash;
+    status = "Processing...";
+    progress = 80;
+    if (onProgress) onProgress(progress, status);
+
+    // Polling статуса задачи
+    let pollTries = 0;
+    while (!isReady && pollTries < 100) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        pollTries++;
+        const jobStatus = await getJobStatus(job_id);
+        // Можно сделать более умную оценку прогресса, если backend будет возвращать processed/total
+        if (jobStatus.status === "SUCCESS") {
+            progress = 100;
+            status = "Готово!";
+            isReady = true;
+            if (onProgress) onProgress(progress, status);
+            break;
+        } else if (jobStatus.status === "FAILURE") {
+            progress = 100;
+            status = "Ошибка!";
+            isReady = false;
+            if (onProgress) onProgress(progress, status);
+            break;
+        } else {
+            // Прогресс между 80 и 99
+            progress = Math.min(99, progress + 1);
+            status = "Обработка...";
+            if (onProgress) onProgress(progress, status);
+        }
+    }
+
+    return { progress, status, job_id, user_hash, isReady };
 };
