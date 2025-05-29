@@ -24,12 +24,6 @@ const TeamPage = () => {
             image: "/photos/borisov.jpg",
         },
         {
-            id: "anisimov",
-            nameKey: "team.anisimov.name",
-            role: "Lead ML-Engineer",
-            image: "/photos/anisimov.jpg",
-        },
-        {
             id: "mitrofanov",
             nameKey: "team.mitrofanov.name",
             role: "Lead Backend Developer",
@@ -46,6 +40,12 @@ const TeamPage = () => {
             nameKey: "team.tokarev.name",
             role: "ML-Engineer",
             image: "/photos/tokarev.jpg",
+        },
+        {
+            id: "anisimov",
+            nameKey: "team.anisimov.name",
+            role: "ML-Engineer",
+            image: "/photos/anisimov.jpg",
         },
         {
             id: "krylov",

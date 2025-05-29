@@ -11,18 +11,24 @@
   },
   "UploadModal": {
     "title": "Upload the archive",
-    "supportedFormats": "Supported formats: .zip, .rar, .7z",
+    "supportedFormats": "Supported formats: .zip",
     "dragText": "Drag and drop the file here or click to select",
-    "maxSize": "Maximum size: 50MB",
     "selectFile": "Select file",
     "defaultStatus": "Select the file to download",
     "readyStatus": "Ready to download",
     "loadingStatus": "Loading...",
     "cancel": "Cancel",
     "upload": "Upload",
-    "success": "The file has been uploaded successfully!",
+    "success": "File processed successfully!",
     "error": "File upload error. Please try again.",
-    "noFileError": "Please select the file first."
+    "noFileError": "Please select the file first.",
+    "download": "Download",
+    "confirmDownloadTitle": "Have you downloaded the file?",
+    "confirmDownloadSubtitle": "After closing the window, this opportunity will no longer be available.",
+    "confirmDownloadYes": "Downloaded",
+    "confirmDownloadStay": "Stay",
+    "archiveUnavailable": "The archive is no longer available (time expired)",
+    "archiveExpired": "Archive download time has expired"
   },
   "VideoBlocks": {
     "firstBlock": {
