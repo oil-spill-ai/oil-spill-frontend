@@ -7,13 +7,13 @@ const PrivacyPolicyPage = () => {
     const t = useTranslations("PrivacyPolicy");
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-gray-900 to-blue-950 text-white pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-gradient-to-b from-gray-900 to-blue-950 text-white pt-24 sm:pt-32 pb-12 sm:pb-20 px-2 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
-                <h1 className="text-4xl md:text-5xl font-bold mb-12 text-center bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
+                <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-8 sm:mb-12 text-center bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
                     {t("title") || "Privacy Policy"}
                 </h1>
 
-                <div className="space-y-8 text-lg text-gray-300">
+                <div className="space-y-6 sm:space-y-8 text-base sm:text-lg text-gray-300">
                     <section>
                         <h2 className="text-2xl font-bold mb-4 text-blue-300">1. Information We Collect</h2>
                         <p>
