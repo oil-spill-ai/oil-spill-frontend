@@ -11,18 +11,24 @@
   },
   "UploadModal": {
     "title": "Загрузка архива",
-    "supportedFormats": "Поддерживаемые форматы: .zip, .rar, .7z",
+    "supportedFormats": "Поддерживаемые форматы: .zip",
     "dragText": "Перетащите файл сюда или нажмите для выбора",
-    "maxSize": "Максимальный размер: 50MB",
     "selectFile": "Выбрать файл",
     "defaultStatus": "Выберите файл для загрузки",
     "readyStatus": "Готово к загрузке",
     "loadingStatus": "Загрузка...",
     "cancel": "Отмена",
     "upload": "Загрузить",
-    "success": "Файл успешно загружен!",
+    "success": "Файл успешно обработан!",
     "error": "Ошибка загрузки файла. Пожалуйста, попробуйте снова.",
-    "noFileError": "Пожалуйста, сначала выберите файл."
+    "noFileError": "Пожалуйста, сначала выберите файл.",
+    "download": "Скачать",
+    "confirmDownloadTitle": "Вы точно скачали файл?",
+    "confirmDownloadSubtitle": "После закрытия окна эта возможность будет недоступна.",
+    "confirmDownloadYes": "Скачал",
+    "confirmDownloadStay": "Остаться",
+    "archiveUnavailable": "Архив больше недоступен (время истекло)",
+    "archiveExpired": "Время на скачивание архива истекло"
   },
   "VideoBlocks": {
     "firstBlock": {

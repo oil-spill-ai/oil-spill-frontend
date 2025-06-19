@@ -120,9 +120,9 @@ Content-Type: multipart/form-data
     ];
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-gray-900 to-blue-950 text-white pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-gradient-to-b from-gray-900 to-blue-950 text-white pt-24 sm:pt-32 pb-12 sm:pb-20 px-2 sm:px-6 lg:px-8">
             <div className="max-w-5xl mx-auto">
-                <h1 className="text-4xl md:text-5xl font-bold mb-12 text-center bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
+                <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-8 sm:mb-12 text-center bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
                     {t("title") || "Technical Documentation"}
                 </h1>
 
@@ -134,21 +134,21 @@ Content-Type: multipart/form-data
                                 className="w-full flex items-center justify-between text-left py-4 focus:outline-none group"
                             >
                                 <div className="flex items-center">
-                  <span className="mr-4 text-blue-400">
-                    {activeSection === section.id ? (
-                        <FaChevronDown className="h-5 w-5" />
-                    ) : (
-                        <FaChevronRight className="h-5 w-5" />
-                    )}
-                  </span>
-                                    <h2 className="text-xl md:text-2xl font-semibold group-hover:text-blue-300 transition-colors">
+                                    <span className="mr-4 text-blue-400">
+                                        {activeSection === section.id ? (
+                                            <FaChevronDown className="h-5 w-5" />
+                                        ) : (
+                                            <FaChevronRight className="h-5 w-5" />
+                                        )}
+                                    </span>
+                                    <h2 className="text-lg sm:text-xl md:text-2xl font-semibold group-hover:text-blue-300 transition-colors">
                                         {section.title}
                                     </h2>
                                 </div>
                             </button>
 
                             {activeSection === section.id && (
-                                <div className="pl-12 pr-4 pt-2 pb-6 text-gray-300 text-lg">
+                                <div className="pl-2 sm:pl-12 pr-2 sm:pr-4 pt-2 pb-6 text-gray-300 text-base sm:text-lg">
                                     {section.content}
                                 </div>
                             )}

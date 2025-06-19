@@ -2,17 +2,16 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useState, useEffect } from "react";
-import { FiUpload, FiX, FiCheck, FiAlertCircle } from "react-icons/fi";
+import { FiUpload, FiX, FiCheck, FiAlertCircle, FiClock } from "react-icons/fi";
 import { useTranslations } from "next-intl";
+import ConfirmDownloadModal from "./ConfirmDownloadModal";
+import { handleUpload, getArchiveTimeLeft } from "@/app/api/uploadService";
 
 interface UploadModalProps {
     isOpen: boolean;
     onClose: () => void;
     onUpload: (file: File) => Promise<{ progress: number; status: string }>;
 }
-
-import { handleUpload, getArchiveTimeLeft } from "../app/api/uploadService";
-import ConfirmDownloadModal from "./ConfirmDownloadModal";
 
 const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
     const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -23,12 +22,34 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
     const [progress, setProgress] = useState(0);
     const [status, setStatus] = useState(t("defaultStatus"));
     const [dragActive, setDragActive] = useState(false);
-    const [jobId, setJobId] = useState<string | null>(null);
     const [userHash, setUserHash] = useState<string | null>(null);
     const [isReady, setIsReady] = useState(false);
-    const ARCHIVE_LIFETIME_SECONDS = 600; // Синхронизировано с backend
+    const ARCHIVE_LIFETIME_SECONDS = 600;
     const [archiveTimeLeft, setArchiveTimeLeft] = useState<number | null>(null);
     const [archiveUnavailable, setArchiveUnavailable] = useState(false);
+
+    // Анимация обработки
+    const loadingVariants = {
+        animate: {
+            rotate: 360,
+            transition: {
+                repeat: Infinity,
+                duration: 1.5,
+                ease: "linear"
+            }
+        }
+    };
+
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [isOpen]);
 
     const handleDrag = (e: React.DragEvent) => {
         e.preventDefault();
@@ -69,7 +90,6 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
         setError(null);
         setProgress(0);
         setStatus(t("loadingStatus"));
-        setJobId(null);
         setUserHash(null);
         setIsReady(false);
 
@@ -80,7 +100,6 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
             });
             setProgress(result.progress);
             setStatus(result.status);
-            setJobId(result.job_id);
             setUserHash(result.user_hash);
             setIsReady(result.isReady);
         } catch (err) {
@@ -98,7 +117,6 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
             setStatus(t("defaultStatus"));
             setError(null);
             setDragActive(false);
-            setJobId(null);
             setUserHash(null);
             setIsReady(false);
             setShowConfirmModal(false);
@@ -107,7 +125,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
         }
     }, [isOpen, t]);
 
-        // Блокируем закрытие по ESC во время загрузки
+    // Блокируем закрытие по ESC во время загрузки
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (isLoading && e.key === "Escape") {
@@ -139,7 +157,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
                         stopped = true;
                     }
                 }
-            } catch (e) {
+            } catch {
                 setArchiveUnavailable(true);
                 stopped = true;
             }
@@ -160,7 +178,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
             }, 1000);
             syncInterval = setInterval(() => {
                 if (!stopped) fetchTimeLeft();
-            }, 30000); // 30 секунд
+            }, 30000);
         }
         return () => {
             if (interval) clearInterval(interval);
@@ -184,26 +202,25 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
         setShowConfirmModal(false);
     };
 
-
     return (
         <AnimatePresence>
             {isOpen && (
                 <div className="fixed inset-0 z-50 overflow-y-auto">
                     {/* Затемнение фона */}
                     <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 0.5 }}
-                        exit={{ opacity: 0 }}
+                        initial={{opacity: 0}}
+                        animate={{opacity: 0.5}}
+                        exit={{opacity: 0}}
                         className="fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm"
-                        onClick={isLoading ? undefined : handleTryClose}
+                        onClick={() => handleTryClose()}
                     />
 
                     {/* Модальное окно */}
-                    <div className="flex items-center justify-center min-h-screen p-4">
+                    <div className="flex items-center justify-center min-h-screen p-4 overflow-y-auto">
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 20 }}
+                            initial={{opacity: 0, y: 20}}
+                            animate={{opacity: 1, y: 0}}
+                            exit={{opacity: 0, y: 20}}
                             className="relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl shadow-2xl overflow-hidden w-full max-w-md border border-gray-700"
                             onClick={(e) => e.stopPropagation()}
                         >
@@ -211,14 +228,14 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
                             <div className="p-6 border-b border-gray-700">
                                 <div className="flex items-center justify-between">
                                     <h2 className="text-2xl font-bold text-white">
-                                        <FiUpload className="inline mr-2" />
+                                        <FiUpload className="inline mr-2"/>
                                         {t("title")}
                                     </h2>
                                     <button
                                         onClick={handleTryClose}
                                         className="text-gray-400 hover:text-white transition-colors"
                                     >
-                                        <FiX size={24} />
+                                        <FiX size={24}/>
                                     </button>
                                 </div>
                                 <p className="flex justify-start text-gray-400 mt-1">
@@ -252,15 +269,12 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
                                                 ? selectedFile.name
                                                 : t("dragText")}
                                         </p>
-                                        <p className="text-gray-500">
-                                            {t("maxSize")}
-                                        </p>
                                         <input
                                             type="file"
                                             onChange={handleFileChange}
                                             className="hidden"
                                             id="file-upload"
-                                            accept=".zip,.rar,.7z"
+                                            accept=".zip"
                                         />
                                         <label
                                             htmlFor="file-upload"
@@ -273,16 +287,26 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
 
                                 {/* Индикатор прогресса */}
                                 {isLoading && (
-                                    <div className="mt-6">
-                                        <div className="flex justify-between text-sm mb-2">
+                                    <div className="mt-6 px-6">
+                                        <div className="flex items-center justify-between text-sm mb-2">
                                             <span className="text-gray-400">{status}</span>
                                             <span className="text-blue-400">{progress}%</span>
                                         </div>
-                                        <div className="w-full bg-gray-700 rounded-full h-2">
-                                            <div
-                                                className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
-                                                style={{ width: `${progress}%` }}
-                                            ></div>
+                                        <div className="w-full bg-gray-700 rounded-full h-2 mb-2">
+                                            <motion.div
+                                                className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full"
+                                                style={{width: `${progress}%`}}
+                                                initial={{width: 0}}
+                                                animate={{width: `${progress}%`}}
+                                                transition={{duration: 0.3}}
+                                            />
+                                        </div>
+                                        <div className="flex justify-center mt-4">
+                                            <motion.div
+                                                className="w-12 h-12 rounded-full border-4 border-blue-500 border-t-transparent"
+                                                variants={loadingVariants}
+                                                animate="animate"
+                                            />
                                         </div>
                                     </div>
                                 )}
@@ -290,38 +314,59 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
                                 {/* Сообщение об ошибке */}
                                 {error && (
                                     <div className="mt-4 flex items-center text-red-400 text-sm">
-                                        <FiAlertCircle className="mr-2" />
+                                        <FiAlertCircle className="mr-2"/>
                                         {error}
                                     </div>
                                 )}
 
                                 {/* Успешная загрузка */}
                                 {isReady && userHash && (
-                                    <div className="mt-4 flex flex-col items-center text-green-400 text-sm">
-                                        <div className="flex items-center mb-2">
-                                            <FiCheck className="mr-2" />
-                                            {t("success")}
-                                        </div>
+                                    <div className="text-xl mt-4 px-6 flex flex-col items-center">
                                         {archiveUnavailable ? (
-                                            <div className="mt-2 px-4 py-2 rounded-lg bg-red-700 text-white font-medium transition-all">
-                                                архив больше не доступен
+                                            <div className="text-red-400 mb-2">
+                                                <FiAlertCircle className="mr-2 inline"/>
+                                                {t("archiveExpired")}
                                             </div>
                                         ) : (
                                             <>
+                                                <div className="text-green-400 mb-2">
+                                                    <FiCheck className="mr-2 inline"/>
+                                                    {t("success")}
+                                                </div>
                                                 <a
                                                     href={`http://localhost:8000/api/download/${userHash}`}
-                                                    className="mt-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-medium transition-all"
+                                                    className="mt-2 px-4 py-2 rounded-lg bg-gradient-to-r from-emerald-400 to-green-600 hover:from-emerald-500 hover:to-green-700 text-white font-medium transition-all"
                                                     download
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                 >
                                                     {t("download")}
                                                 </a>
-                                                <div className="mt-2 text-xs text-gray-300">
-                                                    Архив будет доступен ещё: <span className="font-mono">{formatTime(archiveTimeLeft ?? ARCHIVE_LIFETIME_SECONDS)}</span>
-                                                </div>
                                             </>
                                         )}
+                                        <div className="w-full mt-4 space-y-2">
+                                            <div className="flex items-center justify-between text-gray-300 text-xl">
+                                                <FiClock className="mr-1"/>
+                                                <span>
+                                                <span>
+                                                    {formatTime(archiveTimeLeft ?? ARCHIVE_LIFETIME_SECONDS)}
+                                                </span>
+                                            </span>
+                                            </div>
+                                            <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+                                                <motion.div
+                                                    className="h-full bg-gradient-to-r from-blue-500 to-purple-500"
+                                                    initial={{width: "100%"}}
+                                                    animate={{
+                                                        width: `${Math.max(
+                                                            0,
+                                                            ((archiveTimeLeft ?? ARCHIVE_LIFETIME_SECONDS) / ARCHIVE_LIFETIME_SECONDS) * 100
+                                                        )}%`
+                                                    }}
+                                                    transition={{duration: 1}}
+                                                />
+                                            </div>
+                                        </div>
                                     </div>
                                 )}
                             </div>
@@ -357,9 +402,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
             )}
         </AnimatePresence>
     );
-};
-
-
+}
 
 // Форматирование времени для таймера
 function formatTime(seconds: number) {

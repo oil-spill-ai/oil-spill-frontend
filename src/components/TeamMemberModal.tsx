@@ -41,12 +41,7 @@ const TeamMemberModal: React.FC<TeamMemberModalProps> = ({
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.9 }}
                             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                            className={`
-                                        relative z-50 w-full max-w-2xl p-8 text-base
-                                        bg-gradient-to-br from-gray-800 to-gray-900
-                                        border-2 border-gray-600 rounded-xl shadow-2xl
-                                        backdrop-blur-sm mx-auto
-                                      `}
+                            className="relative z-50 w-full max-w-2xl p-8 text-base bg-gradient-to-br from-gray-800 to-gray-900 border-2 border-gray-700 rounded-xl shadow-2xl backdrop-blur-sm mx-auto"
                             onClick={(e) => e.stopPropagation()}
                         >
                             <button

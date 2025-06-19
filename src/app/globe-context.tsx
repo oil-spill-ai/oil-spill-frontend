@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-require-imports */
 "use client";
 
 import React, { createContext, useContext, useRef, useEffect } from "react";

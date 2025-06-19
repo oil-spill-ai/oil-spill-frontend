@@ -60,7 +60,7 @@ const AboutPage = () => {
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-900 to-blue-950 text-white pt-20">
             {/* Hero секция */}
-            <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <section className="py-20 px-2 sm:px-6 lg:px-8 max-w-7xl mx-auto">
                 <motion.div
                     initial="hidden"
                     animate="visible"
@@ -69,13 +69,13 @@ const AboutPage = () => {
                 >
                     <motion.h1
                         variants={item}
-                        className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400 leading-relaxed"
+                        className="text-2xl sm:text-4xl md:text-6xl font-bold mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400 leading-relaxed"
                     >
                         {t("heroTitle")}
                     </motion.h1>
                     <motion.p
                         variants={item}
-                        className="text-xl md:text-2xl max-w-4xl mx-auto text-blue-100"
+                        className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl max-w-4xl mx-auto text-blue-100 font-bold mt-4 sm:mt-6"
                     >
                         {t("heroSubtitle")}
                     </motion.p>
@@ -83,17 +83,17 @@ const AboutPage = () => {
             </section>
 
             {/* Как это работает */}
-            <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <section className="py-12 sm:py-20 px-2 sm:px-6 lg:px-8 max-w-7xl mx-auto">
                 <motion.h2
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                     viewport={{ once: true }}
-                    className="text-4xl md:text-5xl font-bold mb-16 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400 leading-relaxed"
+                    className="text-2xl sm:text-4xl md:text-5xl font-bold mb-8 sm:mb-16 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400 leading-relaxed"
                 >
                     {t("howItWorks")}
                 </motion.h2>
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
                     {features.map((feature, index) => (
                         <Tooltip key={index} contentKey={feature.key}>
                             <motion.div
@@ -118,18 +118,18 @@ const AboutPage = () => {
             </section>
 
             {/* Детали технологии */}
-            <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+            <section className="py-16 sm:py-24 px-2 sm:px-6 lg:px-8 max-w-5xl mx-auto">
                 <motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     transition={{ duration: 0.8 }}
                     viewport={{ once: true }}
-                    className="bg-gray-800/30 p-10 rounded-2xl border-2 border-gray-600 backdrop-blur-sm"
+                    className="bg-gray-800/30 p-6 sm:p-10 rounded-2xl border-2 border-gray-600 backdrop-blur-sm"
                 >
-                    <h2 className="text-3xl md:text-4xl font-bold mb-8 text-blue-300">
+                    <h2 className="text-xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-blue-300">
                         {t("technologyTitle")}
                     </h2>
-                    <div className="space-y-6 text-xl text-gray-200 leading-relaxed text-justify">
+                    <div className="space-y-4 sm:space-y-6 text-base sm:text-xl text-gray-200 leading-relaxed text-justify">
                         <p>{t("technologyText1")}</p>
                         <p>{t("technologyText2")}</p>
                         <p>{t("technologyText3")}</p>
@@ -138,7 +138,7 @@ const AboutPage = () => {
             </section>
 
             {/* CTA */}
-            <section className="py-20 px-4 text-center">
+            <section className="py-12 sm:py-20 px-2 text-center">
                 <motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
@@ -146,12 +146,12 @@ const AboutPage = () => {
                     viewport={{ once: true }}
                     className="max-w-4xl mx-auto"
                 >
-                    <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                    <h2 className="text-xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">
                         {t("ctaTitle")}
                     </h2>
                     <button
                         onClick={() => setIsModalOpen(true)}
-                        className="mt-8 px-10 py-4 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full text-xl font-bold hover:scale-105 transition-transform shadow-lg hover:shadow-emerald-500/20"
+                        className="mt-6 sm:mt-8 px-6 sm:px-10 py-3 sm:py-4 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full text-base sm:text-xl font-bold hover:scale-105 transition-transform shadow-lg hover:shadow-emerald-500/20"
                     >
                         {t("uploadButton")}
                     </button>
