@@ -61,7 +61,7 @@ const TermsOfServicePage = () => {
                     <section>
                         <h2 className="text-2xl font-bold mb-4 text-blue-300">5. Limitations of Liability</h2>
                         <p>
-                            Oil Spill AI provides the service "as is" without warranties of any kind. We are not liable
+                            Oil Spill AI provides the service &quot;as is&quot; without warranties of any kind. We are not liable
                             for any direct, indirect, incidental, or consequential damages resulting from the use of our
                             service. While we strive for accuracy, we do not guarantee 100% detection of all oil spills.
                         </p>
