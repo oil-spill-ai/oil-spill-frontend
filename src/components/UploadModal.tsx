@@ -157,7 +157,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
                         stopped = true;
                     }
                 }
-            } catch (e) {
+            } catch {
                 setArchiveUnavailable(true);
                 stopped = true;
             }
@@ -212,7 +212,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => {
                         animate={{opacity: 0.5}}
                         exit={{opacity: 0}}
                         className="fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm"
-                        onClick={isLoading ? undefined : handleTryClose}
+                        onClick={() => handleTryClose()}
                     />
 
                     {/* Модальное окно */}
