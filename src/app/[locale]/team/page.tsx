@@ -97,6 +97,7 @@ interface TeamMember {
 }
 
 interface TeamPageContentProps {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     t: any;
     selectedMember: string | null;
     setSelectedMember: (id: string | null) => void;
