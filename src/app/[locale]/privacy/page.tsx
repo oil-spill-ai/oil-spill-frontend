@@ -6,78 +6,80 @@ import { useTranslations } from "next-intl";
 const PrivacyPolicyPage = () => {
     const t = useTranslations("PrivacyPolicy");
 
+    const dataRetentionRows = ["row1", "row2", "row3", "row4", "row5"];
+
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-900 to-blue-950 text-white pt-24 sm:pt-32 pb-12 sm:pb-20 px-2 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
-                <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-8 sm:mb-12 text-center bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
+                <h1 className="py-2 text-2xl sm:text-4xl md:text-5xl font-bold mb-4 text-center bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
                     {t("title") || "Privacy Policy"}
                 </h1>
+                <p className="text-center text-gray-400 mb-8 sm:mb-12">{t("last_updated")}</p>
 
-                <div className="space-y-6 sm:space-y-8 text-base sm:text-lg text-gray-300">
+                <div className="space-y-6 sm:space-y-8 text-base sm:text-lg text-gray-300 text-justify">
                     <section>
-                        <h2 className="text-2xl font-bold mb-4 text-blue-300">1. Information We Collect</h2>
-                        <p>
-                            We collect only the necessary information to provide our oil spill detection services:
-                        </p>
-                        <ul className="list-disc pl-6 mt-2 space-y-2">
-                            <li>Uploaded satellite images for analysis</li>
-                            <li>Metadata associated with the images (coordinates, timestamp)</li>
-                            <li>Basic account information for registered users</li>
-                            <li>Service usage statistics</li>
+                        <h2 className="text-2xl font-bold mb-6 text-blue-300">{t('introduction.heading')}</h2>
+                        <p>{t('introduction.text')}</p>
+                    </section>
+
+                    <section>
+                        <h2 className="text-2xl font-bold mb-6 text-blue-300">{t('information_collection.heading')}</h2>
+                        <p>{t('information_collection.paragraph1')}</p>
+                        <ul className="list-none pl-4 mt-3 space-y-2">
+                            <li><strong className="text-emerald-400">{t('information_collection.item1_title')}</strong> {t('information_collection.item1_text')}</li>
+                            <li><strong className="text-emerald-400">{t('information_collection.item2_title')}</strong> {t('information_collection.item2_text')}</li>
                         </ul>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold mb-4 text-blue-300">2. How We Use Your Information</h2>
-                        <p>
-                            The information we collect is used exclusively for:
-                        </p>
-                        <ul className="list-disc pl-6 mt-2 space-y-2">
-                            <li>Processing and analyzing satellite imagery</li>
-                            <li>Improving our AI detection algorithms</li>
-                            <li>Providing reports and visualizations</li>
-                            <li>Service maintenance and improvement</li>
+                        <h2 className="text-2xl font-bold mb-6 text-blue-300">{t('information_use.heading')}</h2>
+                        <p>{t('information_use.paragraph1')}</p>
+                        <p className="mt-2">{t('information_use.paragraph2')}</p>
+                        <ul className="list-disc pl-6 mt-2 space-y-1">
+                            <li>{t('information_use.list_item1')}</li>
+                            <li>{t('information_use.list_item2')}</li>
+                            <li>{t('information_use.list_item3')}</li>
                         </ul>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold mb-4 text-blue-300">3. Data Security</h2>
-                        <p>
-                            We implement industry-standard security measures to protect your data:
-                        </p>
-                        <ul className="list-disc pl-6 mt-2 space-y-2">
-                            <li>End-to-end encryption for all data transfers</li>
-                            <li>Secure storage with access controls</li>
-                            <li>Regular security audits</li>
-                            <li>Compliance with GDPR and other privacy regulations</li>
-                        </ul>
+                        <h2 className="text-2xl font-bold mb-6 text-blue-300">{t('data_retention.heading')}</h2>
+                        <p>{t('data_retention.paragraph1')}</p>
+                        <p className="mt-2">{t('data_retention.paragraph2')}</p>
+                        <p className="mt-2">{t('data_retention.paragraph3')}</p>
+                        <div className="overflow-x-auto mt-4">
+                            <table className="min-w-full divide-y divide-gray-700 text-left">
+                                <thead className="bg-gray-800">
+                                <tr>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">{t('data_retention.table_header_type')}</th>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">{t('data_retention.table_header_purpose')}</th>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">{t('data_retention.table_header_storage')}</th>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">{t('data_retention.table_header_retention')}</th>
+                                </tr>
+                                </thead>
+                                <tbody className="bg-gray-900 bg-opacity-50 divide-y divide-gray-800">
+                                {dataRetentionRows.map(row => (
+                                    <tr key={row}>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">{t(`data_retention.table_${row}_type`)}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{t(`data_retention.table_${row}_purpose`)}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{t(`data_retention.table_${row}_storage`)}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{t(`data_retention.table_${row}_retention`)}</td>
+                                    </tr>
+                                ))}
+                                </tbody>
+                            </table>
+                        </div>
+                        <p className="mt-4">{t('data_retention.paragraph4')}</p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold mb-4 text-blue-300">4. Data Retention</h2>
-                        <p>
-                            We retain uploaded images and analysis results for 30 days unless otherwise specified.
-                            You may request deletion of your data at any time by contacting us.
-                        </p>
+                        <h2 className="text-2xl font-bold mb-6 text-blue-300">{t('policy_changes.heading')}</h2>
+                        <p>{t('policy_changes.text')}</p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold mb-4 text-blue-300">5. Changes to This Policy</h2>
-                        <p>
-                            We may update this Privacy Policy periodically. Significant changes will be notified
-                            through our website or via email to registered users.
-                        </p>
-                    </section>
-
-                    <section>
-                        <h2 className="text-2xl font-bold mb-4 text-blue-300">6. Contact Us</h2>
-                        <p>
-                            For any questions regarding this Privacy Policy, please contact us at:
-                            <br />
-                            <a href="mailto:privacy@oilspillai.com" className="text-blue-300 hover:underline">
-                                privacy@oilspillai.com
-                            </a>
-                        </p>
+                        <h2 className="text-2xl font-bold mb-6 text-blue-300">{t('contact.heading')}</h2>
+                        <p>{t('contact.text')}</p>
                     </section>
                 </div>
             </div>

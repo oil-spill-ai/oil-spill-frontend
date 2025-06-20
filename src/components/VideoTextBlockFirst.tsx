@@ -62,19 +62,19 @@ const VideoTextBlockFirst = () => {
                     >
                         <motion.h2
                             variants={itemVariants}
-                            className="text-2xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent mb-4 sm:mb-6 leading-[1.3]"
+                            className="text-2xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent mb-4 sm:mb-6 leading-[1.3] text-center lg:text-left"
                         >
                             {t("title")}
                         </motion.h2>
                         <motion.p
                             variants={itemVariants}
-                            className="text-base sm:text-xl text-gray-300 leading-relaxed"
+                            className="text-base sm:text-xl text-gray-300 leading-relaxed text-justify lg:text-left"
                         >
                             {t("description1")}
                         </motion.p>
                         <motion.p
                             variants={itemVariants}
-                            className="text-base sm:text-xl text-gray-300 leading-relaxed"
+                            className="text-base sm:text-xl text-gray-300 leading-relaxed text-justify lg:text-left"
                         >
                             {t("description2")}
                         </motion.p>

@@ -3,6 +3,7 @@
     "home": "Home",
     "about": "About",
     "team": "Our Team",
+    "documentation": "Documentation",
     "language": "Language"
   },
   "HeroSection": {
@@ -125,20 +126,6 @@
       }
     }
   },
-  "Documentation": {
-    "title": "Technical Documentation",
-    "yoloTitle": "YOLOv11 Architecture",
-    "nnTitle": "Neural Network Training",
-    "pipelineTitle": "Processing Pipeline",
-    "apiTitle": "API Integration",
-    "deploymentTitle": "Deployment Architecture"
-  },
-  "PrivacyPolicy": {
-    "title": "Privacy Policy"
-  },
-  "TermsOfService": {
-    "title": "Terms of Service"
-  },
   "Tooltips": {
     "waterAnalysis": "Our system analyzes images in visible, infrared and ultraviolet spectra to detect even minor surface anomalies. Special algorithms enhance contrast and highlight potential pollution areas.",
     "aiProcessing": "The deep learning model was trained on over 50,000 annotated images of oil spills. It can distinguish between oil slicks, algae blooms, and natural surface phenomena with high precision.",
@@ -156,6 +143,211 @@
     "email": "Email",
     "address": "Moscow Aviation Institute, Volokolamskoe shosse, 4, Moscow, Russia",
     "phone": "Phone",
-    "description": "Strive to protect the environment by providing innovative solutions"
+    "description": "Strive to protect the environment by providing innovative solutions."
+  },
+  "Documentation": {
+    "title": "Project Documentation",
+    "system_overview": {
+      "heading": "1.1. System Overview and Architecture",
+      "paragraph1": "The 'Oil Spill AI' platform is a specialized IT system designed for the automated detection and segmentation of oil pollution on the surface of the Black and Azov Seas, based on satellite imagery analysis. The primary goal of the project is to provide government environmental agencies, conservation organizations, and commercial companies with an effective tool for operational monitoring, assessing the scale of spills, and timely response to environmental incidents.",
+      "paragraph2": "The system's architecture is built on the principles of a microservice model, ensuring high performance, scalability, and fault tolerance. This approach allows each system component to function and be deployed independently, interacting with others through well-defined network interfaces. This architectural choice is not accidental; it reflects a strategic focus on creating an industrial-grade solution, not just an academic one. The presence of a dedicated DevOps engineer on the team underscores that infrastructure, deployment automation, and scalability were foundational concerns from the project's inception. The system consists of three key, containerized components:",
+      "component1_title": "1. Backend:",
+      "component1_text": "The central coordinating service, implemented in Python using the FastAPI framework. This component is responsible for receiving and validating requests, managing asynchronous task queues, interacting with the machine learning module, and aggregating the final results.",
+      "component2_title": "2. Frontend:",
+      "component2_text": "The user interface, developed with the Next.js framework. It serves as the single point of entry for users, providing intuitive tools for uploading ZIP archives with images and subsequently downloading the processed results.",
+      "component3_title": "3. Machine Learning Module (ML-Module):",
+      "component3_text": "An isolated microservice, also built on FastAPI, which encapsulates the neural network analysis logic. Its sole task is to receive individual images from the Backend, apply the trained YOLOv11 model to perform instance segmentation, and return the annotated image.",
+      "paragraph3": "The separation of the system into independent yet interconnected services is the foundation of its reliability. The use of asynchronous task queues (Celery and Redis) allows the backend to respond instantly to user requests by delegating resource-intensive computations to the background. This prevents interface blocking and ensures a smooth user experience even under high loads. Containerizing each component with Docker guarantees a consistent environment across all stages—from local development to production deployment—and allows for flexible scaling of the system by adding computational resources (workers) as needed. Thus, the 'Oil Spill AI' architecture is designed from the outset to meet the demands of modern high-load systems, providing a solid foundation for future development and operation."
+    },
+    "tech_stack": {
+      "heading": "1.2. Technology Stack",
+      "intro": "The choice of the technology stack for each system component was dictated by the requirements for performance, scalability, and development convenience. Below is a detailed description of the technologies used in each architectural layer.",
+      "backend_heading": "Backend",
+      "backend_tech1_title": "Programming Language:",
+      "backend_tech1_text": "Python — the de facto standard for data processing and machine learning tasks, thanks to its extensive ecosystem of libraries.",
+      "backend_tech2_title": "Web Framework:",
+      "backend_tech2_text": "FastAPI — a modern, high-performance framework chosen for its native support for asynchronous operations, which is critical for handling many concurrent requests without blocking. Built-in data validation with Pydantic and automatic API documentation generation (Swagger UI) significantly speed up development and testing.",
+      "backend_tech3_title": "Asynchronous Tasks:",
+      "backend_tech3_text": "Celery — a distributed task queue used to execute long-running operations (image processing) in the background. This allows the API server to remain responsive.",
+      "backend_tech4_title": "Message Broker:",
+      "backend_tech4_text": "Redis — a high-performance in-memory data store used as a broker for Celery. It ensures fast and reliable message passing between the API server and background workers.",
+      "backend_tech5_title": "Web Server/Gateway:",
+      "backend_tech5_text": "Gunicorn with Uvicorn as a worker — a standard stack for running asynchronous Python applications in a production environment, providing process management and HTTP request handling.",
+      "backend_tech6_title": "Reverse Proxy:",
+      "backend_tech6_text": "Nginx — used to route incoming traffic to the appropriate services (Frontend or Backend), load balancing, and SSL termination.",
+      "backend_tech7_title": "Containerization:",
+      "backend_tech7_text": "Docker — all Backend components are packaged in isolated containers to ensure portability and environmental consistency.",
+      "frontend_heading": "Frontend",
+      "frontend_tech1_title": "Programming Language:",
+      "frontend_tech1_text": "JavaScript — the primary language for web development.",
+      "frontend_tech2_title": "Framework:",
+      "frontend_tech2_text": "Next.js — a React-based framework chosen for its server-side rendering (SSR) capabilities, which improve SEO and initial load speed. It also provides a convenient file-based routing system and tools for performance optimization.",
+      "frontend_tech3_title": "UI Library:",
+      "frontend_tech3_text": "React — for building a component-based, declarative user interface.",
+      "frontend_tech4_title": "3D Graphics:",
+      "frontend_tech4_text": "",
+      "frontend_tech4_list_item1": "Blender: A powerful 3D asset creation tool, used for modeling animated scenes (tanker, ocean, drone) that serve as a visual metaphor on the project's main page.",
+      "frontend_tech4_list_item2": "Three.js / React Three Fiber: JavaScript libraries for rendering and managing 3D graphics in the browser, used to integrate models from Blender into the web interface.",
+      "frontend_tech5_title": "API Interaction:",
+      "frontend_tech5_text": "Axios — an HTTP client for sending asynchronous requests to the Backend API.",
+      "frontend_tech6_title": "Styling:",
+      "frontend_tech6_text": "Tailwind CSS — a utility-first CSS framework for rapid and consistent component styling.",
+      "ml_heading": "Machine Learning Module",
+      "ml_tech1_title": "Programming Language:",
+      "ml_tech1_text": "Python.",
+      "ml_tech2_title": "Deep Learning Framework:",
+      "ml_tech2_text": "PyTorch — a flexible and powerful framework widely used in research and development of deep learning models.",
+      "ml_tech3_title": "Model:",
+      "ml_tech3_text": "YOLOv11 (You Only Look Once v11) — a state-of-the-art architecture for computer vision tasks. The project uses a specific pre-trained model, `yolo11n-seg.pt`, optimized for instance segmentation tasks (a 'nano' version for high inference speed).",
+      "ml_tech4_title": "Image Processing:",
+      "ml_tech4_text": "OpenCV — a computer vision library used for post-processing: overlaying segmentation masks on the source images.",
+      "ml_tech5_title": "Containerization:",
+      "ml_tech5_text": "Docker with NVIDIA CUDA support — allows the ML service to be packaged in a container and leverage GPU resources for significant computation acceleration during model inference."
+    },
+    "workflow": {
+      "heading": "1.3. Data Processing Workflow",
+      "intro": "The request processing lifecycle in the 'Oil Spill AI' system is a fully automated and clearly orchestrated process that hides all internal complexity from the end-user. The process can be broken down into the following key stages:",
+      "stage1_title": "1. Initiation and Data Upload.",
+      "stage1_text": "The user interacts with the web interface created with Next.js. Through a special modal window, they select and upload a ZIP archive containing satellite images in JPG or PNG format. The interface provides visual feedback at every stage.",
+      "stage2_title": "2. Reception and Queuing.",
+      "stage2_text": "The uploaded archive is sent to the Backend server (FastAPI). The FastAPI server performs initial validation to ensure it is indeed a ZIP archive. Immediately after, it generates a unique task identifier (job_id), which will be used to track the entire process. The Backend then unpacks the archive into a temporary directory and, for each image found, creates a separate task in the distributed Celery queue, using Redis as the message broker. This asynchronous approach allows the server to instantly return the job_id and a confirmation of processing start to the user, without waiting for its completion.",
+      "stage3_title": "3. Asynchronous Processing and Model Inference.",
+      "stage3_text": "One of the available background workers (Celery worker) picks up a task from the queue. This worker sends a single image via HTTP to the dedicated machine learning microservice (ML-Module) at its `/segment` endpoint. The ML service, upon receiving the image, applies the trained YOLOv11 model to perform instance segmentation. The model finds potential oil slicks in the image and generates pixel masks for them. Then, using OpenCV, these masks are overlaid on the original image. The processed image is returned back to the Celery worker in binary format.",
+      "stage4_title": "4. Aggregation and Result Formation.",
+      "stage4_text": "The Celery worker, having received the processed image, saves it to a special directory on the server associated with the current session's job_id. This process is repeated for each image from the original archive. When all tasks related to a single job_id are completed, the Backend automatically collects all processed images and packages them into a new final ZIP archive.",
+      "stage5_title": "5. Result Download.",
+      "stage5_text": "Once the final archive is ready, the task status is updated. The client-side, which periodically polls the status by job_id, informs the user of the successful completion of processing. An active 'Download' button appears on the interface, and a 10-minute countdown timer starts, visually informing the user about the limited storage time for the results. The user can then download the final archive with the annotated images.",
+      "stage6_title": "6. Automatic Cleanup.",
+      "stage6_text": "The system is designed with efficient disk space management in mind. After processing is complete, the Backend initiates two delayed Celery tasks. The first task (`cleanup_original_files`) runs approximately 30 seconds later and deletes the original uploaded archive and its unpacked files. The second task (`cleanup_job_files`) runs with a delay of 600 seconds (10 minutes) and completely removes the directory with the processed images and the final ZIP archive. This mechanism ensures that user data does not accumulate on the server, providing both security and resource savings."
+    },
+    "team": {
+      "heading": "1.4. The Project Team",
+      "intro": "The successful implementation of the 'Oil Spill AI' project was made possible by the coordinated work of a team of ten specialists, each of whom made a significant contribution in their area of expertise. The distribution of roles allowed for effective development management and ensured high quality at all levels—from architecture to user interface.[1]",
+      "member1": "TeamLead: Shorin Sergey Alexandrovich. Oversaw general team coordination, architecture development, technology stack selection, and development process planning.",
+      "member2": "Lead Frontend: Yashin Sergey Leonidovich. Responsible for the design and architecture of the Frontend application, as well as the creation and integration of 3D models in Blender.",
+      "member3": "Frontend Developer: Chikunov Yuriy Vyacheslavovich. Handled layout, implementation of responsive design for various devices, and regular testing of the client-side.",
+      "member4": "Lead Backend: Mitrofanov Bogdan Pavlovich. Led the development of the server-side, designed the Backend architecture, and implemented the logic for file uploads and task queuing with Celery.",
+      "member5": "Backend Developer: Ivanchenko Dmitriy Konstantinovich. Implemented the API for tracking task status, the logic for aggregating results, and the automatic data cleanup mechanism.",
+      "member6": "Backend Developer: Krylov Artyom Anatolyevich. Responsible for the initial setup of Celery and Redis, as well as implementing asynchronous interaction with the ML service.",
+      "member7": "ML Engineer: Tokarev Vladislav Vladislavovich. Conducted dataset analysis and selection, experiments with YOLO model training, and documentation of results.",
+      "member8": "ML Engineer: Anisimov Ivan Alexandrovich. Participated in model training experiments, testing, and compiling the research report.",
+      "member9": "DevOps Engineer: Borisov Nikita Antonovich. Developed the project's microservice model, configured the server infrastructure, containerization with Docker, deployment, and public access via a domain name.",
+      "member10": "Technical Writer: Titova Polina Dmitrievna. Handled process documentation, report writing, and preparation of materials for the project presentation."
+    }
+  },
+  "PrivacyPolicy": {
+    "title": "Privacy Policy",
+    "last_updated": "Last updated: June 10, 2025",
+    "introduction": {
+      "heading": "1. Introduction",
+      "text": "Welcome to 'Oil Spill AI' ('Service'), operated by the PixelHustlers team ('we', 'us', or 'our'). Your privacy is of the utmost importance to us. This Privacy Policy outlines how we handle the data you provide to our Service. By using our Service, you agree to the collection and use of information in accordance with this policy."
+    },
+    "information_collection": {
+      "heading": "2. Information We Collect",
+      "paragraph1": "Our Service is designed to perform a highly specialized task and collects the minimum amount of data necessary to do so. We do not collect personal information such as your name, email address, or payment details. The information collected is divided into two categories:",
+      "item1_title": "User-Provided Data:",
+      "item1_text": "This is the primary type of data we process. It includes the satellite imagery and any other files contained within the ZIP archives you upload to the Service for analysis.",
+      "item2_title": "Automatically Collected Data (Processing Metadata):",
+      "item2_text": "For the proper functioning of the Service, we temporarily generate and store technical, non-personal information. This includes: A unique session identifier (job_id) assigned to each upload. Temporary task status flags required to track processing progress. We do not store IP addresses or other identifying information in association with your data processing tasks."
+    },
+    "information_use": {
+      "heading": "3. How We Use Your Information",
+      "paragraph1": "The information you provide is used solely for one purpose: to perform automated analysis on your uploaded images to detect and segment potential oil spills.",
+      "paragraph2": "Your data is not used for any other purposes, including, but not limited to:",
+      "list_item1": "Training or fine-tuning our machine learning models.",
+      "list_item2": "Marketing or advertising.",
+      "list_item3": "Sale or transfer to third parties."
+    },
+    "data_retention": {
+      "heading": "4. Data Storage, Security, and Retention",
+      "paragraph1": "Our service is architected with a 'privacy-by-design' philosophy, minimizing data persistence. The lifecycle of your data is temporary and fully automated, which is a key feature of our security and privacy policy.",
+      "paragraph2": "We apply industry-standard security measures to protect your data during its brief time on our system. However, it is important to understand that no method of transmission over the Internet or method of electronic storage is 100% secure.",
+      "paragraph3": "Below is a detailed schedule of the lifecycle and retention of different data types in our system:",
+      "table_header_type": "Data Type",
+      "table_header_purpose": "Purpose of Collection",
+      "table_header_storage": "Storage Location",
+      "table_header_retention": "Retention Period",
+      "table_row1_type": "Uploaded ZIP Archive",
+      "table_row1_purpose": "Initial data for processing",
+      "table_row1_storage": "Temporary server file system",
+      "table_row1_retention": "Automatically deleted ~30 seconds after unpacking via a Celery task.",
+      "table_row2_type": "Individual Images (from archive)",
+      "table_row2_purpose": "Input for the ML model",
+      "table_row2_storage": "Temporary server file system",
+      "table_row2_retention": "Automatically deleted along with the source archive ~30 seconds after unpacking.",
+      "table_row3_type": "Processed Images",
+      "table_row3_purpose": "Results of ML analysis",
+      "table_row3_storage": "Temporary object storage (MinIO) or file system",
+      "table_row3_retention": "Automatically deleted 10 minutes after the entire job (job_id) is completed.",
+      "table_row4_type": "Final ZIP Archive with Results",
+      "table_row4_purpose": "Final artifact for user download",
+      "table_row4_storage": "Temporary object storage (MinIO) or file system",
+      "table_row4_retention": "Automatically deleted 10 minutes after the entire job (job_id) is completed.",
+      "table_row5_type": "Processing Metadata (job_id, status)",
+      "table_row5_purpose": "Task tracking and providing status to the user",
+      "table_row5_storage": "PostgreSQL Database",
+      "table_row5_retention": "Retained for a limited period (e.g., 24 hours) for troubleshooting and system analytics, then anonymized or deleted.",
+      "paragraph4": "This strict and automated data deletion schedule ensures that your information is not stored on our system for longer than is absolutely necessary to provide you with the requested service."
+    },
+    "policy_changes": {
+      "heading": "5. Changes to This Privacy Policy",
+      "text": "We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page. You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page."
+    },
+    "contact": {
+      "heading": "6. Contact Us",
+      "text": "If you have any questions about this Privacy Policy, please contact us."
+    }
+  },
+  "TermsOfService": {
+    "title": "Terms of Service",
+    "last_updated": "Last updated: June 10, 2025",
+    "acceptance": {
+      "heading": "1. Acceptance of Terms",
+      "text": "These Terms of Service ('Terms') constitute a legally binding agreement made between you and the PixelHustlers team ('we', 'us', or 'our'), concerning your access to and use of the 'Oil Spill AI' website and its related services ('Service'). By accessing or using the Service, you acknowledge that you have read, understood, and agree to be bound by these Terms. If you do not agree with these Terms, you must not access or use the Service."
+    },
+    "description": {
+      "heading": "2. Description of Service",
+      "text": "The 'Oil Spill AI' Service is an automated software tool that uses machine learning algorithms to analyze satellite imagery for the purpose of detecting and segmenting potential oil pollution. The Service accepts a ZIP archive of images from the user, processes them, and provides an archive with the analysis results for download."
+    },
+    "user_responsibilities": {
+      "heading": "3. User Responsibilities and Acceptable Use",
+      "paragraph1": "You agree to use the Service only for lawful purposes and in accordance with these Terms. You are solely responsible for the data you upload and for the consequences of its use.",
+      "item1_title": "Data Rights:",
+      "item1_text": "You represent and warrant that you have all necessary rights, licenses, and permissions for any data you upload to the Service. You are responsible for ensuring that your actions do not infringe upon the copyrights, trade secrets, or other intellectual property rights of third parties.",
+      "item2_title": "Indemnification:",
+      "item2_text": "You agree to indemnify and hold harmless PixelHustlers from any claims, damages, liabilities, and expenses (including attorneys' fees) arising from your breach of this warranty.",
+      "item3_title": "Prohibited Use:",
+      "item3_text": "You may not use the Service to upload malicious code, conduct attacks on the infrastructure, or for any other activity that could harm the Service or its users."
+    },
+    "ip_rights": {
+      "heading": "4. Intellectual Property Rights",
+      "item1_title": "Your Data:",
+      "item1_text": "You retain full ownership of the content you upload and the processed results you download. We claim no ownership rights over your data.",
+      "item2_title": "Our Service:",
+      "item2_text": "PixelHustlers and its licensors retain all ownership and intellectual property rights to the Service, including but not limited to the software, machine learning models (including the YOLOv11-based model), user interface, branding, and all underlying technology. You are granted a limited, non-exclusive, non-transferable license to access and use the Service in accordance with these Terms."
+    },
+    "disclaimers": {
+      "heading": "5. Disclaimers and Limitation of Liability",
+      "paragraph1": "The Service is provided on an 'as is' and 'as available' basis. We make no warranties, express or implied, regarding the operation of the Service or the information, content, or materials included therein.",
+      "item1_title": "Accuracy of Results:",
+      "item1_text": "The Service is based on probabilistic machine learning models, which have a measurable but not perfect accuracy. We do not warrant that the results generated by the Service will be accurate, complete, or reliable. False positives and false negatives are possible.",
+      "item2_title": "Informational Purposes:",
+      "item2_text": "The output of the Service is intended for informational and analytical purposes only. It should not be the sole basis for making operational, financial, environmental, or safety-critical decisions. You use the results at your own risk.",
+      "item3_title": "Limitation of Liability:",
+      "item3_text": "In no event shall PixelHustlers, its members, or affiliates be liable for any direct, indirect, incidental, special, or consequential damages arising from the use of or inability to use the Service, even if we have been advised of the possibility of such damages."
+    },
+    "termination": {
+      "heading": "6. Termination",
+      "text": "We may terminate or suspend your access to the Service immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms. All provisions of the Terms which by their nature should survive termination shall survive termination, including, without limitation, ownership provisions, warranty disclaimers, indemnity, and limitations of liability."
+    },
+    "general": {
+      "heading": "7. General Provisions",
+      "item1_title": "Governing Law:",
+      "item1_text": "These Terms shall be governed and construed in accordance with the laws of the jurisdiction in which the PixelHustlers team is established, without regard to its conflict of law provisions.",
+      "item2_title": "Severability:",
+      "item2_text": "If any provision of these Terms is held to be invalid or unenforceable, the remaining provisions of these Terms will remain in effect.",
+      "item3_title": "Changes:",
+      "item3_text": "We reserve the right, at our sole discretion, to modify or replace these Terms at any time. By continuing to access or use our Service after those revisions become effective, you agree to be bound by the revised terms."
+    }
   }
 }

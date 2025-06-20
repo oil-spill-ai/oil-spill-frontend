@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useState, useRef } from "react";
 import TeamMemberModal from "@/components/TeamMemberModal";
+import { EggProvider, useEgg } from "./EggProvider";
 
 const TeamPage = () => {
     const t = useTranslations("TeamPage");
@@ -75,6 +76,37 @@ const TeamPage = () => {
     ];
 
     return (
+        <EggProvider>
+            <TeamPageContent
+                t={t}
+                selectedMember={selectedMember}
+                setSelectedMember={setSelectedMember}
+                touchStartRef={touchStartRef}
+                teamMembers={teamMembers}
+            />
+        </EggProvider>
+    );
+};
+
+// Вынесем содержимое TeamPage в отдельный компонент для доступа к контексту
+interface TeamMember {
+    id: string;
+    nameKey: string;
+    role: string;
+    image: string;
+}
+
+interface TeamPageContentProps {
+    t: any;
+    selectedMember: string | null;
+    setSelectedMember: (id: string | null) => void;
+    touchStartRef: React.MutableRefObject<{ x: number; y: number } | null>;
+    teamMembers: TeamMember[];
+}
+
+const TeamPageContent: React.FC<TeamPageContentProps> = ({ t, selectedMember, setSelectedMember, touchStartRef, teamMembers }) => {
+    const { isSettings } = useEgg();
+    return (
         <div className="min-h-screen bg-gradient-to-b from-gray-900 to-blue-950 text-white pt-20">
             <section className="py-20 px-2 sm:px-6 lg:px-8 max-w-7xl mx-auto">
                 <motion.div
@@ -102,15 +134,13 @@ const TeamPage = () => {
                     {t("meetTeam")}
                 </motion.h2>
                 <div
-                    className="flex gap-4 sm:gap-6 items-stretch overflow-x-auto pb-4 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-6 sm:overflow-x-visible scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900"
+                    className="flex gap-4 items-stretch overflow-x-auto pb-4 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-6 sm:overflow-x-visible scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900"
                     style={{ touchAction: 'pan-x', overflowY: 'hidden' }}
                     onWheel={e => {
-                        // Только горизонтальный скролл внутри карусели, вертикальный — странице
                         if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && e.currentTarget.scrollWidth > e.currentTarget.clientWidth) {
                             e.currentTarget.scrollLeft += e.deltaX;
                             e.preventDefault();
                         }
-                        // Если пользователь скроллит вертикально — не мешаем, страница скроллится
                     }}
                     onTouchStart={e => {
                         if (e.touches.length === 1) {
@@ -125,19 +155,17 @@ const TeamPage = () => {
                             const dx = e.touches[0].clientX - touchStartRef.current.x;
                             const dy = e.touches[0].clientY - touchStartRef.current.y;
                             if (Math.abs(dx) > Math.abs(dy) && e.currentTarget.scrollWidth > e.currentTarget.clientWidth) {
-                                // Горизонтальный свайп — скроллим карусель
                                 e.currentTarget.scrollLeft -= dx;
                                 touchStartRef.current.x = e.touches[0].clientX;
-                                // Блокируем вертикальный скролл страницы
                                 e.preventDefault();
-                            } // иначе — вертикальный свайп, ничего не делаем, страница скроллится
+                            }
                         }
                     }}
                     onTouchEnd={() => {
                         touchStartRef.current = null;
                     }}
                 >
-                    {teamMembers.map((member, index) => (
+                    {teamMembers.map((member: TeamMember, index: number) => (
                         <TeamMemberModal
                             key={index}
                             contentKey={`TeamPage.team.${member.id}.bio`}
@@ -155,7 +183,7 @@ const TeamPage = () => {
                             >
                                 <div className="w-20 h-20 sm:w-32 sm:h-32 mx-auto mb-2 sm:mb-4 rounded-full bg-gray-700 overflow-hidden border-2 border-gray-500">
                                     <Image
-                                        src={member.image}
+                                        src={member.id === "chikunov" && isSettings ? "/photos/settings.jpg" : member.image}
                                         alt={t(member.nameKey)}
                                         width={128}
                                         height={128}
@@ -163,7 +191,7 @@ const TeamPage = () => {
                                     />
                                 </div>
                                 <h3 className="text-lg sm:text-2xl font-bold leading-snug mb-1 sm:mb-2">
-                                    {t(member.nameKey).split(" ").map((word, i) => (
+                                    {t(member.nameKey).split(" ").map((word: string, i: number) => (
                                         <div key={i}>{word}</div>
                                     ))}
                                 </h3>

@@ -1,5 +1,7 @@
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://82.148.19.217:8000";
+
 export const getArchiveTimeLeft = async (userHash: string) => {
-    const response = await fetch(`http://localhost:8000/api/archive_time_left/${userHash}`);
+    const response = await fetch(`${API_URL}/api/archive_time_left/${userHash}`);
     if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -7,7 +9,7 @@ export const getArchiveTimeLeft = async (userHash: string) => {
 };
 
 export const getJobStatus = async (jobId: string) => {
-    const response = await fetch(`http://localhost:8000/api/status/${jobId}`);
+    const response = await fetch(`${API_URL}/api/status/${jobId}`);
     if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -33,7 +35,7 @@ export const handleUpload = async (file: File, onProgress?: (progress: number, s
     }
 
     // Отправка архива
-    const response = await fetch("http://localhost:8000/api/upload", {
+    const response = await fetch(`${API_URL}/api/upload`, {
         method: "POST",
         body: formData,
     });
@@ -46,7 +48,7 @@ export const handleUpload = async (file: File, onProgress?: (progress: number, s
     status = "Processing...";
     progress = 80;
     if (onProgress) onProgress(progress, status);
-
+    
     // Polling статуса задачи
     let pollTries = 0;
     while (!isReady && pollTries < 100) {
