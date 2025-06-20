@@ -41,7 +41,7 @@ const TeamMemberModal: React.FC<TeamMemberModalProps> = ({
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.9 }}
                             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                            className="relative z-50 w-full max-w-2xl p-8 text-base bg-gradient-to-br from-gray-800 to-gray-900 border-2 border-gray-700 rounded-xl shadow-2xl backdrop-blur-sm mx-auto"
+                            className="relative z-50 w-full max-w-xl sm:max-w-2xl p-4 sm:p-8 text-base bg-gradient-to-br from-gray-800 to-gray-900 border-2 border-gray-700 rounded-xl shadow-2xl backdrop-blur-sm mx-auto max-h-[90vh] overflow-y-auto"
                             onClick={(e) => e.stopPropagation()}
                         >
                             <button
@@ -69,7 +69,7 @@ const TeamMemberModal: React.FC<TeamMemberModalProps> = ({
                                 </h3>
                             )}
                             <div
-                                className="text-gray-100 leading-relaxed text-lg text-justify [&>p]:indent-8 [&>p]:mb-2"
+                                className="text-gray-100 leading-relaxed text-lg text-justify [&>p]:indent-8 [&>p]:mb-2 [&_a]:text-blue-400 [&_a]:underline hover:[&_a]:text-blue-300"
                                 dangerouslySetInnerHTML={{ __html: content }}
                             />
                         </motion.div>

@@ -58,29 +58,29 @@ const VideoTextBlockSecond = () => {
                     </motion.div>
                     <motion.div
                         variants={containerVariants}
-                        className="w-full lg:flex-1 space-y-6 sm:space-y-8 flex flex-col items-start text-left"
+                        className="w-full lg:flex-1 space-y-6 sm:space-y-8"
                     >
                         <motion.h2
                             variants={itemVariants}
-                            className="text-2xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-amber-400 to-pink-600 bg-clip-text text-transparent mb-4 sm:mb-6 leading-[1.3]"
+                            className="text-2xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-amber-400 to-pink-600 bg-clip-text text-transparent mb-4 sm:mb-6 leading-[1.3] text-center lg:text-right"
                         >
                             {t("title")}
                         </motion.h2>
                         <motion.p
                             variants={itemVariants}
-                            className="text-base sm:text-xl text-gray-300 leading-relaxed"
+                            className="text-base sm:text-xl text-gray-300 leading-relaxed text-justify lg:text-right"
                         >
                             {t("description1")}
                         </motion.p>
                         <motion.p
                             variants={itemVariants}
-                            className="text-base sm:text-xl text-gray-300 leading-relaxed"
+                            className="text-base sm:text-xl text-gray-300 leading-relaxed text-justify lg:text-right"
                         >
                             {t("description2")}
                         </motion.p>
                         <motion.p
                             variants={itemVariants}
-                            className="text-base sm:text-xl text-gray-300 leading-relaxed"
+                            className="text-base sm:text-xl text-gray-300 leading-relaxed text-justify lg:text-right"
                         >
                             {t("description3")}
                         </motion.p>
