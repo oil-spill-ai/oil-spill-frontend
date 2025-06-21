@@ -86,7 +86,7 @@
     "team": {
       "shorin": {
         "name": "Sergey Shorin",
-        "bio": "-"
+        "bio": "<p>Hi! My name is Sergey, and I became the team lead for our team in this project.</p><p>My main task — to design the system architecture — became the starting point of the entire project. I chose a microservice approach: flexible, scalable and great for dynamic AI applications. Based on this, I formed a technical stack: FastAPI on the backend, Celery for asynchronous tasks, and Next.js as a modern and convenient framework for the interface. In addition to design, I myself was actively involved in the development — in particular, I implemented the backend for our ML module and integrated it into the main system.</p><p>Once the technical foundation was laid, I assembled a team called PixelHustlers. We worked according to the principles of Agile, breaking the process into two-week sprints. Regular calls, clear planning and open discussion of problems helped us not only move forward, but do it in a coordinated and meaningful manner. My main goal was to create an environment where everyone feels responsible, inspired, and supported — and can reach their full potential.</p><p>I'm proud of what we've achieved. This project for me is not just a line in the portfolio, but a story about how an idea, thanks to the efforts of the team, gives birth to a living, working, and truly interesting product. It was a powerful experience, and I am grateful to everyone who walked alongside me along the way.</p><p></p>Telegram for communication: <a href=\"https://t.me/shorinss\" class=\"text-blue-400 underline hover:text-blue-500\" target=\"_blank\">@shorinss</a>"
       },
       "borisov": {
         "name": "Nikita Borisov",
